@@ -2,13 +2,15 @@ import rasterio as r
 import georasters as gr
 import geopandas as gpd
 
+def tif(request):
+    tif_file="/../static/maps/tiff/p32a1.tiff"
+    destinationCRS = "EPSG:4326"
+    sourceCRS = r.open(tif_file).crs.to_epsg()
 
-destinationCRS = "EPSG:4326"
-sourceCRS = r.open(tif_file).crs.to_epsg()
+    geoFrame = gr.to_geopandas(gr.from_file(tif_file))
 
-geoFrame = gr.to_geopandas(gr.from_file(tif_file))
+    if sourceCRS != destinationCRS:
+        geoFrame = geoFrame.to_crs(destinationCRS) 
 
-if sourceCRS != destinationCRS:
-    geoFrame = geoFrame.to_crs(destinationCRS) 
+    return geoFrame
 
-return geoFrame
