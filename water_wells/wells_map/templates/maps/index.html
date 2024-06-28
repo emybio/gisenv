@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 1000px;
+            z-index: 1;
+        }
+        .form-inline {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            background: transparent;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+  	        pointer-events: auto;
+        }
+        .form-inline input, .form-inline button {
+            margin-right: 10px;
+        }
+     
+    </style>
+</head>
+
+<body>
+    
+    <form id="coordinate-form" class="form-inline ">
+        {% csrf_token %}
+       lan: {{form.latitude}}
+        lon:{{form.longitude}}
+        bilgi:{{form.info}}
+       <!-- #region -->
+       
+       <!-- {{ form.as_p }}-->
+       
+       <!--#endregion-->
+        <button type="submit">Save Location</button>
+    </form>
+    <div id="map"></div>
+    
+    <script>
+
+document.getElementById('coordinate-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var formData = new FormData(this);
+           
+            fetch('/add_location/', {
+                method: 'POST',
+                body: new URLSearchParams(formData),
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+
+                      alert('Location saved!'+" - "+data);
+                      location.reload();
+                  } else {
+                      alert('Failed to save location');
+                      console.log(data.errors); // Hata mesajlarını konsola yazdır
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+        });
+
+        
+        var map = L.map('map').setView([36.98886728213041, 35.33028047990958], 13);
+
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        });
+
+        var carto = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; CartoDB'
+        });
+
+        var stamen = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; Stamen Design'
+        });
+
+        var kmlBotas=L.tileLayer('https://maps.lib.utexas.edu/maps/historical/newark_nj_1922.jpg')
+
+        var imageUrl = L.tileLayer('https://maps.lib.utexas.edu/maps/historical/newark_nj_1922.jpg')
+                        
+
+        // Varsayılan olarak OpenStreetMap'i ekleyin
+        osm.addTo(map);
+
+        var baseMaps = {
+            "OpenStreetMap": osm,
+            "CartoDB Positron": carto,
+            "Stamen Toner": stamen,
+           "Deneme":imageUrl
+        };
+
+        // Katman kontrolünü ekleyin
+        L.control.layers(baseMaps).addTo(map);
+
+
+
+        map.on('click', function (e) {
+
+            var lat = e.latlng.lat;
+            var lon = e.latlng.lng;            
+            L.marker([lat, lon]).addTo(map);
+
+            fetch('/add_location/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                
+                body: `lat=${lat}&lon=${lon}`
+            }).then(response => response.json())
+                .then(data => {
+                    alert(data+ "---")
+                    if (data.status === 'success') {
+                        alert('Location saved!');
+                    } else {
+                        alert('Failed to save location'+data);
+                    }
+                });
+        });
+
+
+      
+        // Kaydedilen konumları haritada göster
+        var locations = JSON.parse('{{ locations_json|escapejs }}');
+       
+        locations.forEach(function (location) {
+        
+            var latitude = location.fields.latitude;
+            var longitude = location.fields.longitude;
+            var info = location.fields.info;
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(info);
+        });
+
+        map.on('draw:created', function(e) {
+          var coords = e.layer._latlng;
+          console.log(coords);
+          var tempMarker = featureGroup.addLayer(e.layer);
+          var popupContent = '<form role="form" id="form" enctype="multipart/form-data" class = "form-horizontal" onsubmit="addMarker()">'+
+          '<div class="form-group">'+
+              '<label class="control-label col-sm-5"><strong>Date: </strong></label>'+
+              '<input type="date" placeholder="Required" id="date" name="date" class="form-control"/>'+ 
+          '</div>'+
+          '<div class="form-group">'+
+              '<label class="control-label col-sm-5"><strong>Gender: </strong></label>'+
+              '<select class="form-control" id="gender" name="gender">'+
+                '<option value="Male">Male</option>'+
+                '<option value="Female">Female</option>'+
+                '<option value="Other">Other</option>'+
+              '</select>'+ 
+          '</div>'+
+          '<div class="form-group">'+
+              '<label class="control-label col-sm-5"><strong>Age: </strong></label>'+
+              '<input type="number" min="0" class="form-control" id="age" name="age">'+ 
+          '</div>'+
+          //...
+          '<div class="form-group">'+
+              '<label class="control-label col-sm-5"><strong>Description: </strong></label>'+
+              '<textarea class="form-control" rows="6" id="descrip" name="descript">...</textarea>'+
+          '</div>'+
+          '<input style="display: none;" type="text" id="lat" name="lat" value="'+coords.lat.toFixed(6)+'" />'+
+          '<input style="display: none;" type="text" id="lng" name="lng" value="'+coords.lng.toFixed(6)+'" />'+
+          '<div class="form-group">'+
+            '<div style="text-align:center;" class="col-xs-4 col-xs-offset-2"><button type="button" class="btn">Cancel</button></div>'+
+            '<div style="text-align:center;" class="col-xs-4"><button type="submit" value="submit" class="btn btn-primary trigger-submit">Submit</button></div>'+
+          '</div>'+
+          '</form>';
+          tempMarker.bindPopup(popupContent,{
+            keepInView: true,
+            closeButton: false
+            }).openPopup();
+
+        $("#form").submit(function(e){
+            e.preventDefault();
+            console.log("didnt submit");
+            var date =$("#date").val();
+            console.log(date);
+
+        });
+      });
+    </script>
+</body>
+
+</html>

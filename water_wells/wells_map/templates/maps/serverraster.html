@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet with GeoServer WMS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
+    <script src="https://unpkg.com/georaster"></script>
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+      /**  var map = L.map('map').setView([0, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var uydu = L.tileLayer.wms('http://127.0.0.1:8080/geoserver/tif_alani/wms',console.log("girdi"), {
+          
+            layers: 'tif_alani:p32a11',  // Katman adını burada belirtin
+            format: 'image/png',
+            transparent: true,
+            version: '1.1.1',
+            crs: L.CRS.EPSG404000  // CRS ayarını doğru yapılandırın
+        }).addTo(map);
+**/
+        var map = new L.Map('map', { center: new L.LatLng(36.7434523,33.1961117), 
+                                zoom: 8, 
+                                attributionControl:true, 
+                                zoomControl:false,
+                                });
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  	var osm = new L.TileLayer(osmUrl);
+    map.addLayer(osm);
+	
+    var wmsLayer1= L.tileLayer.wms("http://127.0.0.1:8080/geoserver/tif_alani/wms", {
+        layers: 'tif_alani:p32a1',
+        format: 'image/png',
+        transparent: true
+    });
+    map.addLayer(wmsLayer1);
+        //map.setView([36, 33], 8);  // Harita merkezini ve zoom seviyesini ayarlayın
+    </script>
+</body>
+</html>

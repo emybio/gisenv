@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location List</title>
+</head>
+<body>
+    <h2>Saved Locations</h2>
+    <table border="1">
+        <tr>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Info</th>
+            <th>Created At</th>
+        </tr>
+        {% for location in locations %}
+        <tr>
+            <td>{{ location.latitude }}</td>
+            <td>{{ location.longitude }}</td>
+            <td>{{ location.info }}</td>
+            <td>{{ location.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
