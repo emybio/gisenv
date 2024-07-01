@@ -24,6 +24,8 @@ SECRET_KEY = 'django-insecure-ucoznf9^g(neav&sf#+r$7l-2#96+o2qw-&$ibmzb=0npls8%x
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# Middleware to handle large file uploads
+
 
 ALLOWED_HOSTS = []
 
@@ -122,3 +124,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Maximum upload size in bytes (example: 50MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
+

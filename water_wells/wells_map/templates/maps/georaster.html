@@ -1,9 +1,25 @@
+{% load static %}
 <!DOCTYPE>
 <html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+  <script src="{% static 'leaflet/leaflet.js' %}"></script>
+  <script src="{% static 'leaflet/georaster.browser.bundle.min.js' %}"></script>
+  <script src="{% static 'leaflet/proj4.js' %}"></script>
+  <script src="{% static 'leaflet/proj4leaflet.js' %}"></script>
+  <script src="{% static 'leaflet/georaster-layer.js' %}"></script>
+  <!-- <script src="{% static 'leaflet/shpfile.js' %}"></script>
+  <script src="{% static 'leaflet/shp.min.js' %}"></script> -->
+  <script src="https://unpkg.com/shpjs/dist/shp.js"></script>
+  <script src="https://unpkg.com/shpjs/dist/shp.min.js"></script>
+  <script src="https://unpkg.com/leaflet.filelayer/dist/leaflet.filelayer.js"></script>
+  <script src="https://unpkg.com/mapshaper/dist/mapshaper.min.js"></script>
+
+
+
   <style>
     #map {
       bottom: 0;
@@ -83,14 +99,7 @@
   </style>
 
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/georaster"></script>
-  <script src="https://unpkg.com/proj4"></script>
-  <script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
-  <script>
 
-
-  </script>
 </head>
 
 <body>
@@ -99,7 +108,7 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <form id="infoForm">
-        
+
         <input type="text" readonly id="lat" name="lat">
         <input type="text" readonly id="lon" name="lon">
         <label for="info">Enter info:</label><br>
@@ -120,13 +129,27 @@
 
     <!--#endregion-->
     <button type="submit">Save Location</button>
+    <input type="file" id="shapefile-input" multiple />
   </form>
   <div id="map">
   </div>
   <script>
+
+    // Define the ED50 projection
+    var ed50 = '+proj=longlat +datum=ED50 +no_defs';
+
+    // Define the UTM projection for zone 33N (adjust based on your zone)
+    var utm33n = '+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs';
+
+    // Define the WGS84 projection
+    var wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
+
+
+
     // initalize leaflet map
-    var map = L.map('map').setView([36.363245618141725, 34.03564453125001], 10);
-var marker;
+    var map = L.map('map').setView([36.844829, 34.679856], 10);
+
+    var marker;
     // add OpenStreetMap basemap
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -134,70 +157,88 @@ var marker;
       zoomControl: false,
     }).addTo(map);
 
-    document.getElementById('coordinate-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            var formData = new FormData(this);
-           
-            fetch('/add_location/', {
-                method: 'POST',
-                body: new URLSearchParams(formData),
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            }).then(response => response.json())
-              .then(data => {
-                  if (data.status === 'success') {
 
-                      alert('Location saved!'+" - "+data);
-                      location.reload();
-                  } else {
-                      alert('Failed to save location');
-                      console.log(data.errors); // Hata mesajlarını konsola yazdır
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-              });
+    //Form Bilgileri ile Kaydetme
+    document.getElementById('coordinate-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var formData = new FormData(this);
+
+      fetch('/add_location/', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        headers: {
+          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+      }).then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+
+            alert('Location saved!' + " - " + data);
+            location.reload();
+          } else {
+            alert('Failed to save location');
+            console.log(data.errors); // Hata mesajlarını konsola yazdır
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
         });
+    });
 
-        
+
     // Modal control
     var modal = document.getElementById("infoModal");
     var span = document.getElementsByClassName("close")[0];
     var removeBtn = document.getElementById("removeBtn");
-    
-    
 
 
+
+
+
+    // map.on('click', function (e) {
+
+    //   var lat = e.latlng.lat;
+    //   var lon = e.latlng.lng;
+    //   marker = L.marker([lat, lon]).addTo(map);
+
+    //   console.log("Latitude:", lat, "Longitude:", lon);
+
+    //   document.getElementById("lat").value = lat;
+    //   document.getElementById("lon").value = lon;
+
+    //   console.log("Modal element:", modal);
+    //   console.log("Lat element:", document.getElementById("lat"));
+    //   console.log("Lon element:", document.getElementById("lon"));
+
+    //   modal.style.display = "block";
+    //   console.log("Modal display style set to block");
+    // });
 
     map.on('click', function (e) {
+      var latlng = e.latlng;
 
-      var lat = e.latlng.lat;
-      var lon = e.latlng.lng;
-     marker =  L.marker([lat, lon]).addTo(map);
+      // Transform coordinates from WGS84 to ED50
+      var latlonED50 = proj4('EPSG:4326', ed50, [latlng.lng, latlng.lat]);
 
-      console.log("Latitude:", lat, "Longitude:", lon);
+      // Transform coordinates from ED50 to UTM
+      var utmCoords = proj4(ed50, utm33n, latlonED50);
 
-      document.getElementById("lat").value = lat;
-      document.getElementById("lon").value = lon;
+      L.marker([latlng.lat, latlng.lng]).addTo(map);
 
-      console.log("Modal element:", modal);
-      console.log("Lat element:", document.getElementById("lat"));
-      console.log("Lon element:", document.getElementById("lon"));
-
+      document.getElementById("lat").value = utmCoords[1];
+      document.getElementById("lon").value = utmCoords[0];
       modal.style.display = "block";
-      console.log("Modal display style set to block");
     });
 
-    
+
     span.onclick = function () {
       modal.style.display = "none";
       map.removeLayer(marker)
     }
 
-   
-   
+
+
     window.onclick = function (event) {
       if (event.target == modal) {
         modal.style.display = "none";
@@ -275,22 +316,64 @@ var marker;
       var latitude = location.fields.latitude;
       var longitude = location.fields.longitude;
       var info = location.fields.info;
-      L.marker([latitude, longitude])
-      .addTo(map)
-      .bindPopup("<table ><thead><tr><th>KUYU BİLGİLERİ</th><tr></thead><tbody><tr><td>"+info+"</td></tr><tr><td>"+latitude+"</td></tr><tr><td>"+longitude+"</td></tr></tbody><tfoot><tr><td ><a href='#' id='removeBtn'   >SİL</a></td></tr></tfoot</table>");
-    
-    
-        window.onload = function(){ 
-      removeBtn.onclick = function () {      
-      map.removeLayer(marker);
-    }
+      var utmCoords = [longitude, latitude];
+      var wgs84Coords = proj4(utm33n, wgs84, utmCoords);
+      L.marker([wgs84Coords[1], wgs84Coords[0]]).addTo(map)
+        .bindPopup("<table ><thead><tr><th>KUYU BİLGİLERİ</th><tr></thead><tbody><tr><td>" + info + "</td></tr><tr><td>" + latitude + "</td></tr><tr><td>" + longitude + "</td></tr></tbody><tfoot><tr><td ><a href='#' id='removeBtn'   >SİL</a></td></tr></tfoot</table>");
+    });
 
-};
-    
-      });
+    // Function to load and display UTM coordinates from the database
+    // function loadUTMPoints() {
+    //   fetch('/get_locations/')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       data.locations.forEach(location => {
+    //         var utmCoords = [location.lon, location.lat];
+    //         var wgs84Coords = proj4(utm33n, wgs84, utmCoords);
+    //         L.marker([wgs84Coords[1], wgs84Coords[0]]).addTo(map)
+    //           .bindPopup(`Info: ${location.info}`);
+    //       });
+    //     })
+    //     .catch(error => console.error('Error:', error));
+    // }
 
-    
+    // Load UTM points when the map is ready
+    // map.on('load', loadUTMPoints);
+    // map.fire('load');
+    document.getElementById('shapefile-input').addEventListener('change', function (event) {
+      var files = event.target.files;
+      if (files.length) {
+        var shpFile = null, dbfFile = null;
+
+        for (var i = 0; i < files.length; i++) {
+          if (files[i].name.endsWith('.shp')) {
+            shpFile = files[i];
+          } else if (files[i].name.endsWith('.dbf')) {
+            dbfFile = files[i];
+          }
+        }
+
+        if (shpFile && dbfFile) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var shpBuffer = e.target.result;
+            var dbfReader = new FileReader();
+            dbfReader.onload = function (e) {
+              var dbfBuffer = e.target.result;
+              shp.parseShp(shpBuffer, shp.parseDbf(dbfBuffer)).then(function (geojson) {
+                L.geoJSON(geojson).addTo(map);
+              }).catch(error => console.error(error));
+            };
+            dbfReader.readAsArrayBuffer(dbfFile);
+          };
+          reader.readAsArrayBuffer(shpFile);
+        } else {
+          alert('Please select both .shp and .dbf files.');
+        }
+      }
+    });
   </script>
+
 </body>
 
 </html>

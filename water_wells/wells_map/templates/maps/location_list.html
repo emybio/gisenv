@@ -11,6 +11,7 @@
             <th>Longitude</th>
             <th>Info</th>
             <th>Created At</th>
+            <th>Actions</th>
         </tr>
         {% for location in locations %}
         <tr>
@@ -18,6 +19,11 @@
             <td>{{ location.longitude }}</td>
             <td>{{ location.info }}</td>
             <td>{{ location.created_at }}</td>
+            
+            <td>
+                <a href="{% url 'edit_location' location.pk %}">Edit</a>
+                <a href="{% url 'delete_location' location.pk %}">Delete</a>
+            </td>
         </tr>
         {% endfor %}
     </table>

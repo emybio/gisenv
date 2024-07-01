@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coordinate Transformation</title>
+    <script src="{% static 'leaflet/proj4.js' %}"></script>
+</head>
+<body>
+    <script>
+        // Define the WGS84 and UTM projections
+        var wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
+        var utm33n = '+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs';
+    
+        // Function to transform coordinates
+        function transformCoordinates(lat, lon) {
+            var wgs84Coords = [lon, lat];
+            var utmCoords = proj4(wgs84, utm33n, wgs84Coords);
+            return utmCoords;
+        }
+    
+        // Example usage
+        var wgs84Lat = 40.7128;
+        var wgs84Lon = -74.0060;
+        var utmCoords = transformCoordinates(wgs84Lat, wgs84Lon);
+        console.log('UTM Coordinates:', utmCoords);
+    </script>
+    
+</body>
+</html>
