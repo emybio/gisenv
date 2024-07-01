@@ -14,8 +14,19 @@ def index(request):
 def add_location(request):
     if request.method == 'POST':
         form = LocationForm(request.POST)
+        lat = request.POST.get('lat')
+        lon = request.POST.get('lon')
+        info = request.POST.get('info')
+        print("lat: ")
+        print(lat)
         if form.is_valid():
+            print("form verisi geldi...")
             form.save()
+            return JsonResponse({'status': 'success'})
+        elif lat and lon:
+            print("marker verisi geldi...")
+            location=Location(latitude=lat,longitude=lon,info=info)
+            location.save()
             return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'failed', 'errors': form.errors})
 
@@ -25,7 +36,10 @@ def location_list(request):
 
 
 def georaster(request):
-    return render(request,'maps/georaster.html')
+    form = LocationForm()
+    locations = Location.objects.all()
+    locations_json = serializers.serialize('json', locations)
+    return render(request,'maps/georaster.html', {'form': form, 'locations_json': locations_json})
 
 def serverraster(request):
 

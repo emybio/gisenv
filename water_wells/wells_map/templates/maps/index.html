@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -9,13 +11,14 @@
         #map {
             height: 1000px;
             z-index: 1;
+            padding-top:110px
         }
         .form-inline {
             display: flex;
             align-items: center;
             position: absolute;
-            top: 10px;
-            left: 50px;
+            top: 15%;
+            left: 8%;
             background: transparent;
             padding: 10px;
             border-radius: 5px;
@@ -31,7 +34,7 @@
 </head>
 
 <body>
-    
+    {% include 'navbar/header.html' %}
     <form id="coordinate-form" class="form-inline ">
         {% csrf_token %}
        lan: {{form.latitude}}
@@ -199,5 +202,5 @@ document.getElementById('coordinate-form').addEventListener('submit', function(e
       });
     </script>
 </body>
-
+{% include 'navbar/footer.html'%}
 </html>
