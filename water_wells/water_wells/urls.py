@@ -20,4 +20,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('wells_map.urls')),
+    #path('', include('leaflet.urls')),
+    path('', include('shape.urls')),
+    path('', include('projection.urls')),
+    path('sahis/', include('sahis.urls')),
+    path('firma/', include('firma.urls')),
 ]
+  

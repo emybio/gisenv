@@ -1,0 +1,106 @@
+<!-- myapp/templates/map.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 80vh;
+            z-index: 5;
+        }
+
+        #shp-list {
+            height: 20vh;
+            overflow-y: scroll;
+            z-index: 46;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="shp-list">
+        <label for="search">Search Shapefiles:</label>
+        <input type="text" id="search" class="search-box" onkeyup="filterShpFiles()"
+            placeholder="Search for shapefiles..">
+
+        <label for="shpFiles">Select a Shapefile:</label>
+        <select id="shpFiles" onchange="loadLayer(this.value)">
+            <option value="">Select a file</option>
+            {% for shp_file, encoded_shp_file in shp_files %}
+            <option value="{{ encoded_shp_file }}">{{ shp_file }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([36.966705, 35.312765], 8);  // Burada haritanın başlangıç koordinatlarını ve zoom seviyesini belirtiyorsun
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var currentLayer;
+
+        function loadLayer(shpFile) {
+            if (currentLayer) {
+                map.removeLayer(currentLayer);
+            }
+
+            fetch(`/geojson/${shpFile}/`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);  // GeoJSON verisini konsola loglayın
+                    // Polygon koordinatlarını düzelt
+                    data.features.forEach(feature => {
+                        if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+                            feature.geometry.coordinates = feature.geometry.coordinates.map(polygon => {
+                                if (polygon[0] && polygon[0].length > 0 && polygon[0][0] !== polygon[0][polygon[0].length - 1]) {
+                                    polygon[0].push(polygon[0][0]);
+                                }
+                                return polygon;
+                            });
+                        }
+                    });
+
+                    currentLayer = L.geoJSON(data, {
+                        style: function (feature) {
+                            return { color: '#ff0000' };  // Polygonlar için renk ayarı
+                        },
+                        onEachFeature: function (feature, layer) {
+                            if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+                                layer.bindPopup(JSON.stringify(feature.properties));
+                            }
+                        }
+                    }).addTo(map);
+                    map.fitBounds(currentLayer.getBounds());  // Haritayı verinin sınırlarına uygun şekilde ayarlayın
+                })
+                .catch(error => {
+                    console.error('Error fetching the GeoJSON data:', error);
+                });
+        }
+        function filterShpFiles() {
+            var input, filter, select, options, i;
+            input = document.getElementById('search');
+            filter = input.value.toUpperCase();
+            select = document.getElementById('shpFiles');
+            options = select.getElementsByTagName('option');
+
+            for (i = 0; i < options.length; i++) {
+                txtValue = options[i].textContent || options[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    options[i].style.display = "";
+                } else {
+                    options[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

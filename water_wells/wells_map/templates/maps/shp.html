@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-  <script src="{% static 'leaflet/leaflet.js' %}"></script>
-  <script src="{% static 'leaflet/georaster.browser.bundle.min.js' %}"></script>
-  <script src="{% static 'leaflet/proj4.js' %}"></script>
-  <script src="{% static 'leaflet/proj4leaflet.js' %}"></script>
-  <script src="{% static 'leaflet/georaster-layer.js' %}"></script>
+  <script src="{% static 'js/leaflet/leaflet.js' %}"></script>
+  <script src="{% static 'js/leaflet/georaster.browser.bundle.min.js' %}"></script>
+  <script src="{% static 'js/leaflet/proj4.js' %}"></script>
+  <script src="{% static 'js/leaflet/proj4leaflet.js' %}"></script>
+  <script src="{% static 'js/leaflet/georaster-layer.js' %}"></script>
   <!-- <script src="{% static 'leaflet/shpfile.js' %}"></script>
   <script src="{% static 'leaflet/shp.min.js' %}"></script> -->
   <script src="https://unpkg.com/shpjs/dist/shp.js"></script>
@@ -103,26 +103,33 @@
 </head>
 
 <body>
-    <h2>Map with Shapefile</h2>
-    <div id="map"></div>
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+  <h2>Map with Shapefile</h2>
+  <div id="map"></div>
+  <script>
+    // EPSG:23033 (ED50 UTM Zone 33N) projeksiyon tanımlaması
+    var crs23033 = new L.Proj.CRS('EPSG:23033',
+      '+proj=utm +zone=33 +ellps=intl +datum=ED50 +units=m +no_defs',
+      {
+        resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
+      }
+    );
+    var map = L.map('map', { crs: crs23033, }).setView([36.970796, 35.344973], 9);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-        fetch('/upload_shapefile/', {
-            method: 'POST',
-            body: new FormData(document.querySelector('form'))
-        })
-        .then(response => response.json())
-        .then(data => {
-            L.geoJSON(data).addTo(map);
-        })
-        .catch(error => console.error(error));
-    </script>
+    fetch('/upload_shapefile/', {
+      method: 'POST',
+      body: new FormData(document.querySelector('form'))
+    })
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data).addTo(map);
+      })
+      .catch(error => console.error(error));
+  </script>
 
 </body>
 

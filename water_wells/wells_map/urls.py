@@ -11,10 +11,7 @@ urlpatterns = [
     path('get_locations/', views.get_locations, name='get_locations'),
     path('update_coordinates_to_utm/', views.update_coordinates_to_utm, name='update_coordinates_to_utm'),
     path('locations/edit/<int:pk>/', views.edit_location, name='edit_location'),
-    path('locations/delete/<int:pk>/', views.delete_location, name='delete_location'),
-    path('shp', views.shpView, name='shp'),
-    path('upload_shapefile/', views.upload_shapefile, name='upload_shapefile'),
-    path('geojson/', views.geojson_view, name='geojson_view'),
+    path('locations/delete/<int:pk>/', views.delete_location, name='delete_location'),   
     path('map/', views.map_view, name='map_view'),
    
 ]

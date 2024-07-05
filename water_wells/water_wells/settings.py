@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wells_map',
+    'shape',
+    'leaflet',
+    'tiff',
+    'projection',
+     'sahis',
+    'firma',
 ]
 
 MIDDLEWARE = [
