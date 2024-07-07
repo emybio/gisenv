@@ -104,5 +104,16 @@ def update_coordinates_to_utm(request):
 def map_view(request):
    
    
-    return render(request, 'maps/map.html')
+    return render(request, 'maps/index.html')
+
+def projection(request):
+   
+   
+    return render(request, 'maps/projections/map.html')
+
+def projection2(request):
+   
+   
+    return render(request, 'maps/projections/map.html')
+
 

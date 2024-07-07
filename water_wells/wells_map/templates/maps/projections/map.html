@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Leaflet Different Projections</title>
     <meta charset="utf-8" />
@@ -8,21 +9,20 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.js"></script>
-<style>
-#map {
+    <style>
+        #map {
             height: 1000px;
             z-index: 1;
-            padding-top:110px
+            padding-top: 110px
         }
-
-
-</style>
+    </style>
 </head>
+
 <body>
-    <div id="map" ></div>
+    <div id="map"></div>
     <script>
-     // Farklı projeksiyonları tanımlama
-     var crs3857 = L.CRS.EPSG3857;
+        // Farklı projeksiyonları tanımlama
+        var crs3857 = L.CRS.EPSG3857;
         var crs4326 = new L.Proj.CRS('EPSG:4326',
             '+proj=longlat +datum=WGS84 +no_defs',
             {
@@ -36,7 +36,12 @@
                 resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
             }
         );
-
+        var crs23036 = new L.Proj.CRS('EPSG:23036',
+            '+proj=utm +zone=36 +ellps=intl +towgs84=-87,-98,-121,0,0,0,0 +units=m +no_defs',
+            {
+                resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
+            }
+        );
         // Haritayı oluşturma
         var map = L.map('map', {
             center: [0, 0],
@@ -60,18 +65,28 @@
             crs: crs3395
         });
 
+        var layer23036 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            crs: crs23036
+        });
+
         // Katman kontrolünü ekleme
         var baseMaps = {
             "EPSG:3857 (Web Mercator)": layer3857,
             "EPSG:4326 (WGS 84)": layer4326,
-            "EPSG:3395 (Mercator)": layer3395
+            "EPSG:3395 (Mercator)": layer3395,
+            "EPSG:23036 (Mercator)": layer23036
         };
 
         L.control.layers(baseMaps).addTo(map);
 
         // Varsayılan katmanı ekleme
-        layer3857.addTo(map);
-
+        layer23036.addTo(map);
+        map.on('click', function (e) {
+            var latlng = e.latlng
+            console.log(latlng.lat, latlng.lng)
+        });
     </script>
 </body>
+
 </html>

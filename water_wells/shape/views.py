@@ -129,7 +129,7 @@ def list_shp_files():
 def shpView(request):
     shp_files = list_shp_files()
     encoded_shp_files = [urllib.parse.quote(f) for f in shp_files]
-    return render(request, 'maps/shpmap.html', {'shp_files': zip(shp_files, encoded_shp_files)})
+    return render(request, 'maps/shp.html', {'shp_files': zip(shp_files, encoded_shp_files)})
 
 def upload_shapefile(request):
     if request.method == 'POST' and 'shapefile' in request.FILES and 'dbffile' in request.FILES:

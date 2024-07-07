@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h2>Firma Sil</h2>
+    </div>
+    <div class="card-body">
+        <p>{{ firma.isim }} adlı firmayı silmek istediğinize emin misiniz?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Evet, Sil</button>
+            <a href="{% url 'firma_list' %}" class="btn btn-secondary">İptal</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

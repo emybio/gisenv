@@ -1,12 +1,45 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Firma
+from sahis.models import Sahis
 from .forms import FirmaForm
 
-def firma_kayit(request):
+def firma_list(request):
+    firmalar = Firma.objects.all()
+    return render(request, 'firma/firma_list.html', {'firmalar': firmalar})
+
+def firma_detail(request, pk):
+    firma = get_object_or_404(Firma, pk=pk)
+    return render(request, 'firma/firma_detail.html', {'firma': firma})
+
+def firma_create(request):
     if request.method == 'POST':
         form = FirmaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('firma_kayit')
+            return redirect('firma_list')
     else:
         form = FirmaForm()
-    return render(request, 'firma/firma_kayit.html', {'form': form})
+    return render(request, 'firma/firma_form.html', {'form': form})
+
+def firma_update(request, pk):
+    firma = get_object_or_404(Firma, pk=pk)
+    if request.method == 'POST':
+        form = FirmaForm(request.POST, instance=firma)
+        if form.is_valid():
+            form.save()
+            return redirect('firma_list')
+    else:
+        form = FirmaForm(instance=firma)
+    return render(request, 'firma/firma_form.html', {'form': form})
+
+def firma_delete(request, pk):
+    firma = get_object_or_404(Firma, pk=pk)
+    if request.method == 'POST':
+        firma.delete()
+        return redirect('firma_list')
+    return render(request, 'firma/firma_confirm_delete.html', {'firma': firma})
+
+def firma_sahis_list(request, pk):
+    firma = get_object_or_404(Firma, pk=pk)
+    sahislar = Sahis.objects.filter(firma=firma)
+    return render(request, 'firma/firma_sahis_list.html', {'firma': firma, 'sahislar': sahislar})

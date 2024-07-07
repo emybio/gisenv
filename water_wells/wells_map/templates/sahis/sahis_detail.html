@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ sahis.isim }}</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>TC Kimlik No</th>
+                <td>{{ sahis.tc_kimlik_no }}</td>
+            </tr>
+            <tr>
+                <th>Adres</th>
+                <td>{{ sahis.adres }}</td>
+            </tr>
+            <tr>
+                <th>Telefon</th>
+                <td>{{ sahis.telefon }}</td>
+            </tr>
+            <tr>
+                <th>İl</th>
+                <td>{{ sahis.il }}</td>
+            </tr>
+            <tr>
+                <th>İlçe</th>
+                <td>{{ sahis.ilce }}</td>
+            </tr>
+            <tr>
+                <th>Köy</th>
+                <td>{{ sahis.koy }}</td>
+            </tr>
+            <tr>
+                <th>Ada</th>
+                <td>{{ sahis.ada }}</td>
+            </tr>
+            <tr>
+                <th>Parsel</th>
+                <td>{{ sahis.parsel }}</td>
+            </tr>
+            <tr>
+                <th>Koordinat 1</th>
+                <td>{{ sahis.koordinat1 }}</td>
+            </tr>
+            <tr>
+                <th>Koordinat 2</th>
+                <td>{{ sahis.koordinat2 }}</td>
+            </tr>
+            <tr>
+                <th>Firma</th>
+                <td>{{ sahis.firma.isim }}</td>
+            </tr>
+        </table>
+        <a href="{% url 'sahis_update' sahis.pk %}" class="btn btn-secondary mt-3">Düzenle</a>
+        <a href="{% url 'sahis_list' %}" class="btn btn-secondary mt-3">Geri Dön</a>
+    </div>
+</div>
+{% endblock %}
