@@ -1,13 +1,8 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
+{% block title %}Sahis Listesi{% endblock %}
 
-<head>
-    <title>Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <style>
+{% block body %}    <style>
         #map {
             height: 1000px;
             z-index: 1;
@@ -31,11 +26,7 @@
         }
      
     </style>
-</head>
-
-<body>
-    {% include 'navbar/header.html' %}
-    <form id="coordinate-form" class="form-inline ">
+        <form id="coordinate-form" class="form-inline ">
         {% csrf_token %}
        lan: {{form.latitude}}
         lon:{{form.longitude}}
@@ -202,5 +193,5 @@ document.getElementById('coordinate-form').addEventListener('submit', function(e
       });
     </script>
 </body>
-{% include 'navbar/footer.html'%}
-</html>
+
+{% endblock %}

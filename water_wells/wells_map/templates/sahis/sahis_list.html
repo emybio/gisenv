@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Sahis Listesi{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h2>Sahis Listesi</h2>
+        <a href="{% url 'sahis_create' %}" class="btn btn-primary float-right">Yeni Sahis Ekle</a>
+    </div>
+    <div class="card-body">
+        <table id="sahisTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Firma</th>
+                    <th>İsim</th>
+                    <th>TC Kimlik No</th>
+                    <th>Telefon</th>
+                    <th>İl</th>
+                    <th>İlçe</th>
+                    <th>Koordinatlar</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sahis in sahislar %}
+                <tr>
+                    <td><a href="{% url 'firma_sahis_list' sahis.firma.pk %}">{{ sahis.firma.isim }}</a></td>
+                    <td><a href="{% url 'sahis_detail' sahis.pk %}">{{ sahis.isim }}</a></td>
+                    <td>{{ sahis.tc_kimlik_no }}</td>
+                    <td>{{ sahis.telefon }}</td>
+                    <td>{{ sahis.il }}</td>
+                    <td>{{ sahis.ilce }}</td>
+                    <td><a href="{{  map_url  }}" class="btn btn-secondary btn-sm">
+                            {{ sahis.koordinat1 }}- {{sahis.koordinat2}}</a></td>
+                    <td>
+                        <a href="{% url 'sahis_update' sahis.pk %}" class="btn btn-secondary btn-sm">Düzenle</a>
+                        <a href="{% url 'sahis_delete' sahis.pk %}" class="btn btn-danger btn-sm">Sil</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $(document).ready(function () {
+        $('#sahisTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json"
+            }
+        });
+    });
+</script>
+{% endblock %}

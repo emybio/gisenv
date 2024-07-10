@@ -6,5 +6,12 @@ class SahisForm(forms.ModelForm):
         model = Sahis
         fields = [
             'tc_kimlik_no', 'adres', 'isim', 'telefon', 'il', 'ilce', 'koy', 
-            'ada', 'parsel', 'koordinat1', 'koordinat2'
+            'ada', 'parsel', 'koordinat1', 'koordinat2', 'firma'
         ]
+        widgets = {
+            'firma': forms.Select(attrs={'class': 'form-control'})
+        }
+        
+def __init__(self, *args, **kwargs):
+    super(SahisForm, self).__init__(*args, **kwargs)
+    self.fields['firma'].required = False

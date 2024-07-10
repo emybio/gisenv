@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ firma.isim }}</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>Meslek</th>
+                <td>{{ firma.meslek }}</td>
+            </tr>
+            <tr>
+                <th>Diploma Oda Sicil No</th>
+                <td>{{ firma.diploma_oda_sicil_no }}</td>
+            </tr>
+            <tr>
+                <th>Adres</th>
+                <td>{{ firma.adres }}</td>
+            </tr>
+        </table>
+        <a href="{% url 'firma_update' firma.pk %}" class="btn btn-secondary mt-3">Düzenle</a>
+        <a href="{% url 'firma_list' %}" class="btn btn-secondary mt-3">Geri Dön</a>
+    </div>
+</div>
+{% endblock %}

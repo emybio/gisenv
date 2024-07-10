@@ -113,22 +113,51 @@
         resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
       }
     );
-    var map = L.map('map', { crs: crs23033, }).setView([36.970796, 35.344973], 9);
+
+    var crs23036 = new L.Proj.CRS('EPSG:23036',
+            '+proj=utm +zone=36 +ellps=intl +towgs84=-87,-98,-121,0,0,0,0 +units=m +no_defs',
+            
+        );
+
+
+    var map = L.map('map', {  }).setView([36.970796, 35.344973], 9);
+
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    fetch('/upload_shapefile/', {
-      method: 'POST',
-      body: new FormData(document.querySelector('form'))
-    })
-      .then(response => response.json())
-      .then(data => {
-        L.geoJSON(data).addTo(map);
+    var layer23036 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            crs: crs23036
+        });
+
+    // fetch('/upload_shapefile/', {
+    //   method: 'POST',
+    //   body: new FormData(document.querySelector('form'))
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     L.geoJSON(data).addTo(map);
+    //   })
+    //   .catch(error => console.error(error));
+
+    var baseMaps = {
+            
+            "EPSG:23036 (Mercator)": layer23036
+        };
+
+        L.control.layers(baseMaps).addTo(map);
+      map.on('click',function(e){
+         var k=e.latlng
+         
+         
+         console.log(k.lat, k.lng)
+
+
+
       })
-      .catch(error => console.error(error));
   </script>
 
 </body>

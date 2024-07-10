@@ -1,314 +1,102 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html'%}
 
-<head>
-    <title>Leaflet Different Projections</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.js"></script>
-</head>
+{% block body %}
+<div id="map" style="width: 100%; height: 600px;"></div>
+<script>
+    // EPSG:23033 (ED50 UTM Zone 33N) projeksiyon tanımlaması
+    var crs23033 = new L.Proj.CRS('EPSG:23033',
+        '+proj=utm +zone=33 +ellps=intl +datum=ED50 +units=m +no_defs',
+        {
+            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
+        }
+    );
 
-<body>
-    <div id="map" style="width: 100%; height: 600px;"></div>
-    <script>
-        // EPSG:23033 (ED50 UTM Zone 33N) projeksiyon tanımlaması
-        var crs23033 = new L.Proj.CRS('EPSG:23033',
-            '+proj=utm +zone=33 +ellps=intl +datum=ED50 +units=m +no_defs',
-            {
-                resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
-            }
-        );
+    var map = L.map('map', {
+        //crs: crs23033,
+        center: [50, 10], // ED50 UTM Zone 33N içinde bir koordinat
+        zoom: 2
+    });
 
-        var map = L.map('map', {
-            //crs: crs23033,
-            center: [50, 10], // ED50 UTM Zone 33N içinde bir koordinat
-            zoom: 2
-        });
+    // Define the UTM projection for zone 33N (adjust based on your zone)
+  var utm33n = '+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs';
 
-        // Görüntü overlay'i ekleme
-        var imageUrl = '/static/maps/png/defe.png';
-        var imageBounds = [
-            [36.5, 34.0],  // Sol üst köşe koordinatları
-            [36.375, 34.125]  // Sağ alt köşe koordinatları
-        ];
+  // Define the WGS84 projection
+  var wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
+    // Kaydedilen konumları haritada göster
+    var locations = JSON.parse('{{ locations_json|escapejs }}');
 
-        L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.8
-        }).addTo(map);
-        // Harita sınırlarını görüntüye göre ayarlama
-        map.fitBounds(imageBounds);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    locations.forEach(function (location) {
 
-        map.on('click', function (e) {
-
-            var lat = e.latlng.lat;
-            var lon = e.latlng.lng;
-
-            console.log("lat: ", lat)
-            L.marker([lat, lon]).addTo(map).bindPopup("lat: " + lat + "<br>lon: " + lon).openPopup()
-        });
+        var latitude = location.fields.latitude;
+        var longitude = location.fields.longitude;
+        var info = location.fields.info;
+        var utmCoords = [longitude, latitude];
+        var wgs84Coords = proj4(utm33n, wgs84, utmCoords);
+        L.marker([wgs84Coords[1], wgs84Coords[0]]).addTo(map)
+            .bindPopup("<table ><thead><tr><th>KUYU BİLGİLERİ</th><tr></thead><tbody><tr><td>" + info + "</td></tr><tr><td>" + latitude + "</td></tr><tr><td>" + longitude + "</td></tr></tbody><tfoot><tr><td ><a href='#' id='removeBtn'   >SİL</a></td></tr></tfoot</table>");
+    });
 
 
-        // Diğer projeksiyonlar ve katman kontrolü
-        var crs3857 = L.CRS.EPSG3857;
-        var crs4326 = new L.Proj.CRS('EPSG:4326',
-            '+proj=longlat +datum=WGS84 +no_defs',
-            {
-                resolutions: [1, 0.5, 0.25, 0.125, 0.0625]
-            }
-        );
+    // Görüntü overlay'i ekleme
+    var imageUrl = '/static/maps/png/defe.png';
+    var imageBounds = [
+        [36.5, 34.0],  // Sol üst köşe koordinatları
+        [36.375, 34.125]  // Sağ alt köşe koordinatları
+    ];
 
-        var layer3857 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs3857
-        });
+    L.imageOverlay(imageUrl, imageBounds, {
+        opacity: 0.8
+    }).addTo(map);
+    // Harita sınırlarını görüntüye göre ayarlama
+    map.fitBounds(imageBounds);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        var layer4326 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs4326
-        });
+    map.on('click', function (e) {
 
-        var layer23033 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs23033
-        });
+        var lat = e.latlng.lat;
+        var lon = e.latlng.lng;
 
-        var baseMaps = {
-            "EPSG:3857 (Web Mercator)": layer3857,
-            "EPSG:4326 (WGS 84)": layer4326,
-            "EPSG:23033 (ED50 UTM Zone 33N)": layer23033
-        };
-
-        L.control.layers(baseMaps).addTo(map);
-
-        // Varsayılan katmanı ekleme
-        layer23033.addTo(map);
-    </script>
-    <script>
-        // EPSG:23033 (ED50 UTM Zone 33N) projeksiyon tanımlaması
-        var crs23033 = new L.Proj.CRS('EPSG:23033',
-            '+proj=utm +zone=33 +ellps=intl +datum=ED50 +units=m +no_defs',
-            {
-                resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
-            }
-        );
-
-        var map = L.map('map', {
-            //crs: crs23033,
-            center: [50, 10], // ED50 UTM Zone 33N içinde bir koordinat
-            zoom: 2
-        });
-
-        // Görüntü overlay'i ekleme
-        var imageUrl = '/static/maps/png/defe.png';
-        var imageBounds = [
-            [36.5, 34.0],  // Sol üst köşe koordinatları
-            [36.375, 34.125]  // Sağ alt köşe koordinatları
-        ];
-
-        L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.8
-        }).addTo(map);
-        // Harita sınırlarını görüntüye göre ayarlama
-        map.fitBounds(imageBounds);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-        map.on('click', function (e) {
-
-            var lat = e.latlng.lat;
-            var lon = e.latlng.lng;
-
-            console.log("lat: ", lat)
-            L.marker([lat, lon]).addTo(map).bindPopup("lat: " + lat + "<br>lon: " + lon).openPopup()
-        });
+        console.log("lat: ", lat)
+        L.marker([lat, lon]).addTo(map).bindPopup("lat: " + lat + "<br>lon: " + lon).openPopup()
+    });
 
 
-        // Diğer projeksiyonlar ve katman kontrolü
-        var crs3857 = L.CRS.EPSG3857;
-        var crs4326 = new L.Proj.CRS('EPSG:4326',
-            '+proj=longlat +datum=WGS84 +no_defs',
-            {
-                resolutions: [1, 0.5, 0.25, 0.125, 0.0625]
-            }
-        );
+    // Diğer projeksiyonlar ve katman kontrolü
+    var crs3857 = L.CRS.EPSG3857;
+    var crs4326 = new L.Proj.CRS('EPSG:4326',
+        '+proj=longlat +datum=WGS84 +no_defs',
+        {
+            resolutions: [1, 0.5, 0.25, 0.125, 0.0625]
+        }
+    );
 
-        var layer3857 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs3857
-        });
+    var layer3857 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        crs: crs3857
+    });
 
-        var layer4326 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs4326
-        });
+    var layer4326 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        crs: crs4326
+    });
 
-        var layer23033 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs23033
-        });
+    var layer23033 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        crs: crs23033
+    });
 
-        var baseMaps = {
-            "EPSG:3857 (Web Mercator)": layer3857,
-            "EPSG:4326 (WGS 84)": layer4326,
-            "EPSG:23033 (ED50 UTM Zone 33N)": layer23033
-        };
+    var baseMaps = {
+        "EPSG:3857 (Web Mercator)": layer3857,
+        "EPSG:4326 (WGS 84)": layer4326,
+        "EPSG:23033 (ED50 UTM Zone 33N)": layer23033
+    };
 
-        L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps).addTo(map);
 
-        // Varsayılan katmanı ekleme
-        layer23033.addTo(map);
-    </script>
-    <script>
-        // EPSG:23033 (ED50 UTM Zone 33N) projeksiyon tanımlaması
-        var crs23033 = new L.Proj.CRS('EPSG:23033',
-            '+proj=utm +zone=33 +ellps=intl +datum=ED50 +units=m +no_defs',
-            {
-                resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
-            }
-        );
-
-        var map = L.map('map', {
-            //crs: crs23033,
-            center: [50, 10], // ED50 UTM Zone 33N içinde bir koordinat
-            zoom: 2
-        });
-
-        // Görüntü overlay'i ekleme
-        var imageUrl = '/static/maps/png/defe.png';
-        var imageBounds = [
-            [36.5, 34.0],  // Sol üst köşe koordinatları
-            [36.375, 34.125]  // Sağ alt köşe koordinatları
-        ];
-
-        L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.8
-        }).addTo(map);
-        // Harita sınırlarını görüntüye göre ayarlama
-        map.fitBounds(imageBounds);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-        map.on('click', function (e) {
-
-            var lat = e.latlng.lat;
-            var lon = e.latlng.lng;
-
-            console.log("lat: ", lat)
-            L.marker([lat, lon]).addTo(map).bindPopup("lat: " + lat + "<br>lon: " + lon).openPopup()
-        });
+    // Varsayılan katmanı ekleme
+    layer23033.addTo(map);
 
 
-        // Diğer projeksiyonlar ve katman kontrolü
-        var crs3857 = L.CRS.EPSG3857;
-        var crs4326 = new L.Proj.CRS('EPSG:4326',
-            '+proj=longlat +datum=WGS84 +no_defs',
-            {
-                resolutions: [1, 0.5, 0.25, 0.125, 0.0625]
-            }
-        );
 
-        var layer3857 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs3857
-        });
-
-        var layer4326 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs4326
-        });
-
-        var layer23033 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs23033
-        });
-
-        var baseMaps = {
-            "EPSG:3857 (Web Mercator)": layer3857,
-            "EPSG:4326 (WGS 84)": layer4326,
-            "EPSG:23033 (ED50 UTM Zone 33N)": layer23033
-        };
-
-        L.control.layers(baseMaps).addTo(map);
-
-        // Varsayılan katmanı ekleme
-        layer23033.addTo(map);
-    </script>
-    <script>
-        // EPSG:23033 (ED50 UTM Zone 33N) projeksiyon tanımlaması
-        var crs23033 = new L.Proj.CRS('EPSG:23033',
-            '+proj=utm +zone=33 +ellps=intl +datum=ED50 +units=m +no_defs',
-            {
-                resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5]
-            }
-        );
-
-        var map = L.map('map', {
-            //crs: crs23033,
-            center: [50, 10], // ED50 UTM Zone 33N içinde bir koordinat
-            zoom: 2
-        });
-
-        // Görüntü overlay'i ekleme
-        var imageUrl = '/static/maps/png/defe.png';
-        var imageBounds = [
-            [36.5, 34.0],  // Sol üst köşe koordinatları
-            [36.375, 34.125]  // Sağ alt köşe koordinatları
-        ];
-
-        L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.8
-        }).addTo(map);
-        // Harita sınırlarını görüntüye göre ayarlama
-        map.fitBounds(imageBounds);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-        map.on('click', function (e) {
-
-            var lat = e.latlng.lat;
-            var lon = e.latlng.lng;
-
-            console.log("lat: ", lat)
-            L.marker([lat, lon]).addTo(map).bindPopup("lat: " + lat + "<br>lon: " + lon).openPopup()
-        });
-
-
-        // Diğer projeksiyonlar ve katman kontrolü
-        var crs3857 = L.CRS.EPSG3857;
-        var crs4326 = new L.Proj.CRS('EPSG:4326',
-            '+proj=longlat +datum=WGS84 +no_defs',
-            {
-                resolutions: [1, 0.5, 0.25, 0.125, 0.0625]
-            }
-        );
-
-        var layer3857 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs3857
-        });
-
-        var layer4326 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs4326
-        });
-
-        var layer23033 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            crs: crs23033
-        });
-
-        var baseMaps = {
-            "EPSG:3857 (Web Mercator)": layer3857,
-            "EPSG:4326 (WGS 84)": layer4326,
-            "EPSG:23033 (ED50 UTM Zone 33N)": layer23033
-        };
-
-        L.control.layers(baseMaps).addTo(map);
-
-        // Varsayılan katmanı ekleme
-        layer23033.addTo(map);
-    </script>
-</body>
-
-</html>
+</script>
+{% endblock %}

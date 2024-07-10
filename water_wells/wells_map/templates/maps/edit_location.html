@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Location</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Sahis Listesi{% endblock %}
+
+{% block body %}
     <h1>Edit Location</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
-</body>
-</html>
+{% endblock %}

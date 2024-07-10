@@ -1,9 +1,15 @@
 from django.shortcuts import render
+from wells_map.models import Location
+from django.core import serializers
 
 # Create your views here.
 
 def proj(request):
+     print("map")
      return render(request, 'maps/projections/map.html', {})
  
 def proj2(request):
-     return render(request, 'maps/projections/map2.html', {})        
+     print("map2")
+     locations = Location.objects.all()
+     locations_json = serializers.serialize('json', locations)
+     return render(request, 'maps/projections/map2.html', {'locations_json': locations_json})        
