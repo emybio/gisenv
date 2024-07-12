@@ -12,4 +12,5 @@ def proj2(request):
      print("map2")
      locations = Location.objects.all()
      locations_json = serializers.serialize('json', locations)
-     return render(request, 'maps/projections/map2.html', {'locations_json': locations_json})        
+     title="Projection 2"
+     return render(request, 'maps/projections/map2.html', {'locations_json': locations_json,'title':title})        
