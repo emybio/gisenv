@@ -25,5 +25,8 @@ urlpatterns = [
     path('projection/', include('projection.urls')),
     path('sahis/', include('sahis.urls')),
     path('firma/', include('firma.urls')),
+    path('pngraster/', include('pngraster.urls')),
+    path('georaster/', include('georaster.urls')),
+    path('serverraster/', include('serverraster.urls')),
 ]
   

@@ -1,20 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Sahis Listesi{% endblock %}
+
 
 {% block body %}
 <style>
   #map {
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
+    height: 1000px;
+    z-index: 1;
+
   }
 
-  #map {
-    z-index: 8;
-  }
+
 
   .overlay {
     background: rgba(0, 120, 0, 0);
@@ -27,13 +23,13 @@
     display: flex;
     align-items: center;
     position: fixed;
-    top: 0;
+    top: 15%;
     left: 8%;
-    background: rgba(117, 102, 60, 0.733);
+    background: transparent;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.0);
+    z-index: 2;
     pointer-events: auto;
   }
 
@@ -84,42 +80,58 @@
 
 
 <!-- Modal -->
-<div id="infoModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
+<div id="infoModal" class="modal ">
+  <div class="modal-content col-4">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+    </div>
     <form id="infoForm">
-
-      <input type="text" readonly id="lat" name="lat">
-      <input type="text" readonly id="lon" name="lon">
-      <label for="info">Enter info:</label><br>
-      <input type="text" id="info" name="info"><br>
-      <input type="button" value="Save" onclick="saveInfo()">
+      <div class="modal-body">
+        <table>
+          <tr>
+            <td><label for="lon">E:</label> </td>
+            <td><input type="text" id="lon" name="lon"></td>
+          </tr>
+          <tr>
+            <td><label for="lat">N:</label></td>
+            <td><input type="text" id="lat" name="lat"></td>
+          </tr>
+          <tr>
+            <td><label for="info">Nokta Bilgisi:</label></td>
+            <td><input type="text" id="info" name="info"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <input type="button" class="btn btn-success" value="Kaydet" onclick="saveInfo()">
+      </div>
     </form>
   </div>
 </div>
 <form id="coordinate-form" class="form-inline ">
-  <input type="file" id="geotiff-file" class="overlay">
+  <!-- <label>Tiff <input type="file" id="geotiff-file" class="overlay" name="Geotiff"></label> -->
   {% csrf_token %}
-  lan: {{form.latitude}}
-  lon:{{form.longitude}}
-  bilgi:{{form.info}}
+  E:{{form.longitude}}
+  N: {{form.latitude}}
+
+  Bilgi:{{form.info}}
   <!-- #region -->
 
   <!-- {{ form.as_p }}-->
 
   <!--#endregion-->
-  <button type="submit">Save Location</button>
-  <input type="file" id="shapefile-input" multiple />
+  <button type="submit">Koordinat Kaydet</button>
+  <!-- <label>Shape <input type="file" id="shapefile-input" multiple name="Shape" /></label> -->
 </form>
 <div id="map">
 </div>
 <script>
 
   // Define the ED50 projection
-  var ed50 = '+proj=longlat +datum=ED50 +no_defs';
+  var ed50 = '+proj=utm +zone=36 +ellps=intl +towgs84=-84.1,-101.8,-129.7,0,0,0.468,1.05 +units=m +no_defs +type=crs';
 
-  // Define the UTM projection for zone 33N (adjust based on your zone)
-  var utm33n = '+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs';
+  // Define the UTM projection for zone 36N (adjust based on your zone)
+  var utm36n = '+proj=utm +zone=36 +datum=WGS84 +units=m +no_defs';
 
   // Define the WGS84 projection
   var wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
@@ -131,9 +143,9 @@
 
   var marker;
   // add OpenStreetMap basemap
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    opacity: 0.8,
+    opacity: 1,
     zoomControl: false,
   }).addTo(map);
 
@@ -155,7 +167,7 @@
         if (data.status === 'success') {
 
           alert('Location saved!' + " - " + data);
-          location.reload();
+          //location.reload();
         } else {
           alert('Failed to save location');
           console.log(data.errors); // Hata mesajlarını konsola yazdır
@@ -199,21 +211,27 @@
     var latlng = e.latlng;
 
     // Transform coordinates from WGS84 to ED50
-    var latlonED50 = proj4('EPSG:4326', ed50, [latlng.lng, latlng.lat]);
+    //EPSG European Petroleum Survey Group (Avrupa Petrol Ölçme Grubu) 4326 WGS84'e karşılık gelmektedir.
+    //şimdilik 4326'yı 23036 yaptım denemek için.
+    var latlonED50 = proj4("EPSG:4326", ed50, [latlng.lng, latlng.lat]);
+    //proj4('EPSG:23036', ed50, [latlng.lng, latlng.lat]);
 
     // Transform coordinates from ED50 to UTM
-    var utmCoords = proj4(ed50, utm33n, latlonED50);
+    var utmCoords = proj4(ed50, utm36n, latlonED50);
 
-    L.marker([latlng.lat, latlng.lng]).addTo(map);
+    marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
 
     document.getElementById("lat").value = utmCoords[1];
     document.getElementById("lon").value = utmCoords[0];
     modal.style.display = "block";
+
   });
+
 
 
   span.onclick = function () {
     modal.style.display = "none";
+
     map.removeLayer(marker)
   }
 
@@ -222,10 +240,11 @@
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
+
       map.removeLayer(marker)
+
     }
   }
-
   document.getElementById("geotiff-file").addEventListener("change", function (event) {
     var file = event.target.files[0];
     console.log("file:", file);
@@ -272,6 +291,8 @@
     formData.append('info', info);
     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
+
+
     fetch('/add_location/', {
       method: 'POST',
       body: formData
@@ -280,6 +301,7 @@
       .then(data => {
         if (data.status === 'success') {
           alert('Location saved!');
+          //location.reload();
         } else {
           alert('Failed to save location');
         }
@@ -297,7 +319,7 @@
     var longitude = location.fields.longitude;
     var info = location.fields.info;
     var utmCoords = [longitude, latitude];
-    var wgs84Coords = proj4(utm33n, wgs84, utmCoords);
+    var wgs84Coords = proj4(utm36n, wgs84, utmCoords);
     L.marker([wgs84Coords[1], wgs84Coords[0]]).addTo(map)
       .bindPopup("<table ><thead><tr><th>KUYU BİLGİLERİ</th><tr></thead><tbody><tr><td>" + info + "</td></tr><tr><td>" + latitude + "</td></tr><tr><td>" + longitude + "</td></tr></tbody><tfoot><tr><td ><a href='#' id='removeBtn'   >SİL</a></td></tr></tfoot</table>");
   });

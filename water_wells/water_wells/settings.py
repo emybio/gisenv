@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     "projection",
     "sahis",
     "firma",
+    "pngraster",
+    "serverraster",
+    "georaster",
 ]
 
 MIDDLEWARE = [

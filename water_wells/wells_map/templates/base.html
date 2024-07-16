@@ -11,6 +11,7 @@
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
    <script src="{% static 'js/leaflet/leaflet.js' %}"></script>
+   <script src="{% static 'js/leaflet/leaflet-provider.js' %}"></script>
    <script src="{% static 'js/leaflet/georaster.browser.bundle.min.js' %}"></script>
    <script src="{% static 'js/leaflet/proj4.js' %}"></script>
    <script src="{% static 'js/leaflet/proj4leaflet.js' %}"></script>
@@ -30,7 +31,7 @@
 </head>
 
 <body>
-   
+
    {% include 'navbar/header.html' %}
    <div class="mt-4">
       {% block body %}{% endblock %}
