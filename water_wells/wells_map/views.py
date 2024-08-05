@@ -10,8 +10,9 @@ from geojson import Feature, FeatureCollection, Point
 import os
 import geojson
 from pathlib import Path
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def index(request):
     form = LocationForm()
     locations = Location.objects.all()
@@ -23,7 +24,7 @@ def index(request):
         {"form": form, "locations_json": locations_json, "title": "Anasayfa"},
     )
 
-
+@login_required
 def add_location(request):
     if request.method == "POST":
         form = LocationForm(request.POST)
@@ -43,12 +44,12 @@ def add_location(request):
             return JsonResponse({"status": "success"})
     return JsonResponse({"status": "failed", "errors": form.errors})
 
-
+@login_required
 def location_list(request):
     locations = Location.objects.all()
     return render(request, "maps/location_list.html", {"locations": locations})
 
-
+@login_required
 def edit_location(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if request.method == "POST":
@@ -60,7 +61,7 @@ def edit_location(request, pk):
         form = LocationForm(instance=location)
     return render(request, "maps/edit_location.html", {"form": form})
 
-
+@login_required
 def delete_location(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if request.method == "POST":
@@ -118,3 +119,10 @@ def map_view(request):
             "title": "Anasayfa",
         },
     )
+
+
+# def custom_404(request, exception):
+#     return render(request, 'errors/404.html', status=404)
+
+# def custom_500(request):
+#     return render(request, 'errors/500.html', status=500)

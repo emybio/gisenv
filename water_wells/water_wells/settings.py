@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,8 +28,14 @@ DEBUG = True
 # Middleware to handle large file uploads
 
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    
+    '127.0.0.1',  # Eğer localhost üzerinde çalışıyorsanız
+    'localhost',  # Yerel geliştirme için
+    
+]
+LOGIN_URL = '/login/'  # Giriş yapmayan kullanıcıların yönlendirileceği sayfanın URL'si
+LOGIN_REDIRECT_URL = '/georaster'
 
 # Application definition
 
@@ -49,6 +56,7 @@ INSTALLED_APPS = [
     "pngraster",
     "serverraster",
     "georaster",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -98,18 +106,30 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP sunucusunun adresi
+EMAIL_PORT = 587  # SMTP portu (genellikle 587, 465 veya 25)
+EMAIL_USE_TLS = True  # TLS kullanımı
+EMAIL_HOST_USER = 'emrah0denizer.gmail.com'  # SMTP kullanıcı adı
+EMAIL_HOST_PASSWORD = 'frxx edpt ktxq tuzq'  # SMTP şifresi
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Gönderen e-posta adresi
+
+
 
 
 # Internationalization
@@ -127,7 +147,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+
+STATIC_URL = "/static/"
+
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -136,3 +159,22 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Maximum upload size in bytes (example: 50MB)
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django_debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

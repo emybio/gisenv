@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 
-
+{% load static %}
 
 {% block body %}
 <style>
   #map {
-    height: 1000px;
-    z-index: 1;
-
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
   }
-
-
 
   .overlay {
     background: rgba(0, 120, 0, 0);
@@ -19,11 +17,11 @@
     ;
   }
 
-  .form-inline {
+  /* .form-inline {
     display: flex;
     align-items: center;
     position: fixed;
-    top: 15%;
+    top: 70px;
     left: 8%;
     background: transparent;
     padding: 10px;
@@ -36,7 +34,7 @@
   .form-inline input,
   .form-inline button {
     margin-right: 10px;
-  }
+  } */
 
 
   /* Modal styles */
@@ -75,10 +73,60 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .leaflet-control-opacity {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .leaflet-control-opacity label,
+  .leaflet-control-opacity input {
+    display: block;
+    width: 100%;
+  }
+
+
+  .leaflet-sidebar-pane {
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .leaflet-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #sidebar {
+    max-height: 100vh;
+    overflow-y: auto;
+    ;
+  }
+
+  #opacitySlider {
+    width: 80%;
+  }
+
+  .leaflet-tile {
+    z-index: 1;
+    /* Varsayılan z-index */
+  }
+
+  .leaflet-overlay {
+    z-index: 100;
+    /* Diğer overlay katmanlar için */
+  }
+
+  .georaster-layer {
+    z-index: 1000;
+    /* TIFF katmanı için en yüksek z-index */
+  }
 </style>
 
 
-
+<!-- Mouse ile marker eklendiğinde çıkan form -->
 <!-- Modal -->
 <div id="infoModal" class="modal ">
   <div class="modal-content col-4">
@@ -108,23 +156,92 @@
     </form>
   </div>
 </div>
-<form id="coordinate-form" class="form-inline ">
-  <!-- <label>Tiff <input type="file" id="geotiff-file" class="overlay" name="Geotiff"></label> -->
-  {% csrf_token %}
-  E:{{form.longitude}}
-  N: {{form.latitude}}
 
-  Bilgi:{{form.info}}
-  <!-- #region -->
-
-  <!-- {{ form.as_p }}-->
-
-  <!--#endregion-->
-  <button type="submit">Koordinat Kaydet</button>
-  <!-- <label>Shape <input type="file" id="shapefile-input" multiple name="Shape" /></label> -->
-</form>
 <div id="map">
 </div>
+<div id="sidebar" class="leaflet-sidebar collapsed" style="height: auto;">
+  <div class="leaflet-sidebar-tabs">
+    <ul role="tablist" class="leaflet-sidebar-ul">
+      <li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#opacity" role="tab"><i class="fa fa-adjust"></i></a></li>
+      <li><a href="#form" role="tab"><i class="fa fa-map-marker"></i></a></li>
+      <li><a href="#islemler" role="tab"><i class="fa  fa-angle-double-right"></i></a></li>
+    </ul>
+  </div>
+  <div class="leaflet-sidebar-content">
+
+    <div class="leaflet-sidebar-pane" id="home">
+      <h1 class="leaflet-sidebar-header">Home</h1>
+      <p>Welcome to the sidebar.</p>
+      <div class="" id="navbarNavDropdown">
+        <ul class="navbar-nav >
+          <li class=" nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/sahis">Başvuru</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/firma">Firma</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown link
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/sahis">Başvuru</a></li>
+              <li><a class="dropdown-item" href="/firma">Firma</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="leaflet-sidebar-pane" id="opacity">
+      <h1 class="leaflet-sidebar-header">Şeffaflık Kontrolü</h1>
+      <input type="range" id="opacitySlider" min="0" max="1" step="0.0001" value="1">
+    </div>
+
+    <div class="leaflet-sidebar-pane" id="form">
+      <h1 class="leaflet-sidebar-header">Form Control</h1><br>
+      <form id="coordinate-form" class="  ">
+        <label>Tiff <input type="file" id="geotiff-file" class="overlay" name="Geotiff"></label>
+        {% csrf_token %}
+        <label class="form-control">E:{{form.longitude}}</label>
+        <label class="form-control">N: {{form.latitude}}</label>
+
+        <label class="form-control">Bilgi:{{form.info}}</label>
+        <!-- #region -->
+
+        <!-- {{ form.as_p }}-->
+
+        <!--#endregion-->
+        <button type="submit" class="btn btn-success">Koordinat Kaydet</button>
+        <!-- <label>Shape <input type="file" id="shapefile-input" multiple name="Shape" /></label> -->
+      </form>
+      <div id="layer-list"></div>
+    </div>
+
+    <div class="leaflet-sidebar-pane" id="islemler">
+      <div class="controls">
+        <input type="radio" id="marker" name="drawing" value="marker" class="radioBtn">
+        <label for="marker">Marker</label><br>
+        <input type="radio" id="polygon" name="drawing" value="polygon" class="radioBtn">
+        <label for="polygon">Polygon</label><br>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+</div>
+
+
+
+<script src="{% static 'js/georaster/localTifAddToMap.js' %}"></script>
 <script>
 
   // Define the ED50 projection
@@ -136,180 +253,6 @@
   // Define the WGS84 projection
   var wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
 
-
-
-  // initalize leaflet map
-  var map = L.map('map').setView([36.844829, 34.679856], 10);
-
-  var marker;
-  // add OpenStreetMap basemap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    opacity: 1,
-    zoomControl: false,
-  }).addTo(map);
-
-
-  //Form Bilgileri ile Kaydetme
-  document.getElementById('coordinate-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    var formData = new FormData(this);
-
-    fetch('/add_location/', {
-      method: 'POST',
-      body: new URLSearchParams(formData),
-      headers: {
-        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-      }
-    }).then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-
-          alert('Location saved!' + " - " + data);
-          //location.reload();
-        } else {
-          alert('Failed to save location');
-          console.log(data.errors); // Hata mesajlarını konsola yazdır
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
-
-
-  // Modal control
-  var modal = document.getElementById("infoModal");
-  var span = document.getElementsByClassName("close")[0];
-  var removeBtn = document.getElementById("removeBtn");
-
-
-
-
-
-  // map.on('click', function (e) {
-
-  //   var lat = e.latlng.lat;
-  //   var lon = e.latlng.lng;
-  //   marker = L.marker([lat, lon]).addTo(map);
-
-  //   console.log("Latitude:", lat, "Longitude:", lon);
-
-  //   document.getElementById("lat").value = lat;
-  //   document.getElementById("lon").value = lon;
-
-  //   console.log("Modal element:", modal);
-  //   console.log("Lat element:", document.getElementById("lat"));
-  //   console.log("Lon element:", document.getElementById("lon"));
-
-  //   modal.style.display = "block";
-  //   console.log("Modal display style set to block");
-  // });
-
-  map.on('click', function (e) {
-    var latlng = e.latlng;
-
-    // Transform coordinates from WGS84 to ED50
-    //EPSG European Petroleum Survey Group (Avrupa Petrol Ölçme Grubu) 4326 WGS84'e karşılık gelmektedir.
-    //şimdilik 4326'yı 23036 yaptım denemek için.
-    var latlonED50 = proj4("EPSG:4326", ed50, [latlng.lng, latlng.lat]);
-    //proj4('EPSG:23036', ed50, [latlng.lng, latlng.lat]);
-
-    // Transform coordinates from ED50 to UTM
-    var utmCoords = proj4(ed50, utm36n, latlonED50);
-
-    marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
-
-    document.getElementById("lat").value = utmCoords[1];
-    document.getElementById("lon").value = utmCoords[0];
-    modal.style.display = "block";
-
-  });
-
-
-
-  span.onclick = function () {
-    modal.style.display = "none";
-
-    map.removeLayer(marker)
-  }
-
-
-
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-
-      map.removeLayer(marker)
-
-    }
-  }
-  document.getElementById("geotiff-file").addEventListener("change", function (event) {
-    var file = event.target.files[0];
-    console.log("file:", file);
-
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = function () {
-      var arrayBuffer = reader.result;
-      parseGeoraster(arrayBuffer).then(georaster => {
-
-        console.log("georaster:", georaster);
-        /*
-            GeoRasterLayer is an extension of GridLayer,
-            which means can use GridLayer options like opacity.
- 
-            Just make sure to include the georaster option!
- 
-            http://leafletjs.com/reference-1.2.0.html#gridlayer
-        */
-        var layer = new GeoRasterLayer({
-          georaster: georaster,
-          opacity: 0.9,
-          resolution: 256
-        });
-        console.log("layer:", layer);
-        layer.addTo(map);
-
-        map.fitBounds(layer.getBounds());
-        //  document.getElementById("overlay").style.display = "none";
-      });
-    };
-  });
-
-
-
-  function saveInfo() {
-    var lat = document.getElementById("lat").value;
-    var lon = document.getElementById("lon").value;
-    var info = document.getElementById("info").value;
-
-    var formData = new FormData();
-    formData.append('lat', lat);
-    formData.append('lon', lon);
-    formData.append('info', info);
-    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-
-
-
-    fetch('/add_location/', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          alert('Location saved!');
-          //location.reload();
-        } else {
-          alert('Failed to save location');
-        }
-        modal.style.display = "none";
-      })
-      .catch(error => console.error('Error:', error));
-  }
-
   // Kaydedilen konumları haritada göster
   var locations = JSON.parse('{{ locations_json|escapejs }}');
 
@@ -320,59 +263,9 @@
     var info = location.fields.info;
     var utmCoords = [longitude, latitude];
     var wgs84Coords = proj4(utm36n, wgs84, utmCoords);
-    L.marker([wgs84Coords[1], wgs84Coords[0]]).addTo(map)
+    L.marker([wgs84Coords[1], wgs84Coords[0]]).bindTooltip(info).addTo(map)
       .bindPopup("<table ><thead><tr><th>KUYU BİLGİLERİ</th><tr></thead><tbody><tr><td>" + info + "</td></tr><tr><td>" + latitude + "</td></tr><tr><td>" + longitude + "</td></tr></tbody><tfoot><tr><td ><a href='#' id='removeBtn'   >SİL</a></td></tr></tfoot</table>");
   });
 
-  // Function to load and display UTM coordinates from the database
-  // function loadUTMPoints() {
-  //   fetch('/get_locations/')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       data.locations.forEach(location => {
-  //         var utmCoords = [location.lon, location.lat];
-  //         var wgs84Coords = proj4(utm33n, wgs84, utmCoords);
-  //         L.marker([wgs84Coords[1], wgs84Coords[0]]).addTo(map)
-  //           .bindPopup(`Info: ${location.info}`);
-  //       });
-  //     })
-  //     .catch(error => console.error('Error:', error));
-  // }
-
-  // Load UTM points when the map is ready
-  // map.on('load', loadUTMPoints);
-  // map.fire('load');
-  document.getElementById('shapefile-input').addEventListener('change', function (event) {
-    var files = event.target.files;
-    if (files.length) {
-      var shpFile = null, dbfFile = null;
-
-      for (var i = 0; i < files.length; i++) {
-        if (files[i].name.endsWith('.shp')) {
-          shpFile = files[i];
-        } else if (files[i].name.endsWith('.dbf')) {
-          dbfFile = files[i];
-        }
-      }
-
-      if (shpFile && dbfFile) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          var shpBuffer = e.target.result;
-          var dbfReader = new FileReader();
-          dbfReader.onload = function (e) {
-            var dbfBuffer = e.target.result;
-            shp.parseShp(shpBuffer, shp.parseDbf(dbfBuffer)).then(function (geojson) {
-              L.geoJSON(geojson).addTo(map);
-            }).catch(error => console.error(error));
-          };
-          dbfReader.readAsArrayBuffer(dbfFile);
-        };
-        reader.readAsArrayBuffer(shpFile);
-      } else {
-        alert('Please select both .shp and .dbf files.');
-      }
-    }
-  });
 </script>
 {% endblock %}

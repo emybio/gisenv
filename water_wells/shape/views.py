@@ -15,7 +15,7 @@ import fiona
 from shapely.geometry import shape, mapping
 from pyproj import Transformer
 from json import JSONEncoder
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -72,7 +72,7 @@ class ConvertShpToGeoJSON(View):
                 return JsonResponse(geojson)
         except Exception as e:
             return JsonResponse({'error': f'Error processing SHP file {shp_file_path}: {str(e)}'}, status=500)
-    
+@login_required
 def shp_to_geojson(shp_path):
     try:
         reader = shapefile.Reader(shp_path)
@@ -115,7 +115,7 @@ def geojson_view(request, shp_filename):
     except Exception as e:
          print(f"Error processing SHP file {shp_filename}: {e}") 
          raise
-
+@login_required
 def list_shp_files():
     shp_files = []
     for root, dirs, files in os.walk(SHP_FOLDER):
@@ -125,12 +125,12 @@ def list_shp_files():
                 shp_files.append(full_path)
     return shp_files
 
-
+@login_required
 def shpView(request):
     shp_files = list_shp_files()
     encoded_shp_files = [urllib.parse.quote(f) for f in shp_files]
-    return render(request, 'maps/shp.html', {'shp_files': zip(shp_files, encoded_shp_files)})
-
+    return render(request, 'shp/shpmap.html', {'shp_files': zip(shp_files, encoded_shp_files)})
+@login_required
 def upload_shapefile(request):
     if request.method == 'POST' and 'shapefile' in request.FILES and 'dbffile' in request.FILES:
         shp_file = request.FILES['shapefile']
@@ -173,7 +173,7 @@ def upload_shapefile(request):
             os.remove(dbf_file_path)
             return HttpResponse(status=500, content=str(e))
 
-    return render(request, 'maps/uploadshp.html')
+    return render(request, 'shp/uploadshp.html')
 
 
 

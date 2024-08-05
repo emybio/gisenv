@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Sahis
 from .forms import SahisForm
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def sahis_list(request):
     sahislar = Sahis.objects.all()
     map_url = reverse('location_list')
@@ -10,20 +13,24 @@ def sahis_list(request):
     print(map_url)
     return render(request, 'sahis/sahis_list.html', {'sahislar': sahislar,'map_url':map_url})
 
+@login_required
 def sahis_detail(request, pk):
     sahis = get_object_or_404(Sahis, pk=pk)
     return render(request, 'sahis/sahis_detail.html', {'sahis': sahis})
 
+@login_required
 def sahis_create(request):
     if request.method == 'POST':
         form = SahisForm(request.POST)
         if form.is_valid():
+            
             form.save()
             return redirect('sahis_list')
     else:
         form = SahisForm()
     return render(request, 'sahis/sahis_form.html', {'form': form})
 
+@login_required
 def sahis_update(request, pk):
     sahis = get_object_or_404(Sahis, pk=pk)
     if request.method == 'POST':
@@ -35,6 +42,7 @@ def sahis_update(request, pk):
         form = SahisForm(instance=sahis)
     return render(request, 'sahis/sahis_form.html', {'form': form})
 
+@login_required
 def sahis_delete(request, pk):
     sahis = get_object_or_404(Sahis, pk=pk)
     if request.method == 'POST':

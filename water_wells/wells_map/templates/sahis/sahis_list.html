@@ -25,7 +25,7 @@
             <tbody>
                 {% for sahis in sahislar %}
                 <tr>
-                    <td><a href="{% url 'firma_sahis_list' sahis.firma.pk %}">{{ sahis.firma.isim }}</a></td>
+                    <td><a href=" {% if sahis.firma.id %}   {% url 'firma_sahis_list' sahis.firma.pk %} {% endif %} ">{{ sahis.firma.isim }}</a></td>
                     <td><a href="{% url 'sahis_detail' sahis.pk %}">{{ sahis.isim }}</a></td>
                     <td>{{ sahis.tc_kimlik_no }}</td>
                     <td>{{ sahis.telefon }}</td>
