@@ -1,0 +1,9 @@
+<!-- profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Profil Bilgileri</h1>
+    <p>Kullanıcı Adı: {{ user.username }}</p>
+    <p>E-posta: {{ user.email }}</p>
+    <p>Oluşturma Tarihi: {{ user.date_joined }}</p>
+{% endblock %}

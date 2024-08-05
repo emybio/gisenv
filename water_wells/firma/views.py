@@ -20,11 +20,16 @@ def firma_create(request):
     if request.method == 'POST':
         form = FirmaForm(request.POST)
         if form.is_valid():
-            form.save()
+            firma = form.save(commit=False)
+            firma.user = request.user  # İşlemi yapan kullanıcıyı kaydedin
+            firma.save()
             return redirect('firma_list')
     else:
         form = FirmaForm()
     return render(request, 'firma/firma_form.html', {'form': form})
+
+
+
 @login_required
 def firma_update(request, pk):
     firma = get_object_or_404(Firma, pk=pk)

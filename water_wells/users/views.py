@@ -75,3 +75,7 @@ def approve_user(request, user_id):
     user.is_active = True
     user.save()
     return redirect('admin_users_list')  # Yönlendirmek istediğiniz URL
+
+@login_required
+def profile_view(request):
+    return render(request, 'users/profile.html')

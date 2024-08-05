@@ -3,5 +3,5 @@ from .models import Sahis
 
 @admin.register(Sahis)
 class SahisAdmin(admin.ModelAdmin):
-    list_display = ('isim', 'tc_kimlik_no', 'telefon', 'il', 'ilce', 'koy')
-    search_fields = ('isim', 'tc_kimlik_no', 'telefon', 'il', 'ilce', 'koy')
+    list_display = ('isim', 'tc_kimlik_no', 'telefon', 'il', 'ilce', 'koy','user')
+    search_fields = ('isim', 'tc_kimlik_no', 'telefon', 'il', 'ilce', 'koy','user')

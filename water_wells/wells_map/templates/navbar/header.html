@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-nav-scroll" style="--bs-scroll-height: 150px;">
- 
+
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -17,6 +17,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/firma">Firma</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/georaster">Georaster</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown link
@@ -31,14 +34,17 @@
     </div>
   </div>
   <ul>
-    <li><a href="{% url '/georaster' %}">Home</a></li>
+    <li><a href="{% url 'georaster' %}">Home</a></li>
     {% if user.is_authenticated %}
-        <li><a href="{% url 'profile' %}">{{ user.username }}</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'profile' %}">{{ user.username }}</a></li>
+    <li><form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-warning">Logout</button>
+  </form></li>
     {% else %}
-        <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'register' %}">Register</a></li>
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'register' %}">Register</a></li>
     {% endif %}
     <!-- Diğer menü öğeleri -->
-</ul>
+  </ul>
 </nav>

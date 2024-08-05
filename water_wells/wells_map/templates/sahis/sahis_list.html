@@ -19,13 +19,15 @@
                     <th>İl</th>
                     <th>İlçe</th>
                     <th>Koordinatlar</th>
+                    <th>Kaydeden</th>
                     <th>İşlemler</th>
                 </tr>
             </thead>
             <tbody>
                 {% for sahis in sahislar %}
                 <tr>
-                    <td><a href=" {% if sahis.firma.id %}   {% url 'firma_sahis_list' sahis.firma.pk %} {% endif %} ">{{ sahis.firma.isim }}</a></td>
+                    <td><a href=" {% if sahis.firma.id %}   {% url 'firma_sahis_list' sahis.firma.pk %} {% endif %} ">
+                        {{     sahis.firma.isim }}</a></td>
                     <td><a href="{% url 'sahis_detail' sahis.pk %}">{{ sahis.isim }}</a></td>
                     <td>{{ sahis.tc_kimlik_no }}</td>
                     <td>{{ sahis.telefon }}</td>
@@ -33,6 +35,7 @@
                     <td>{{ sahis.ilce }}</td>
                     <td><a href="{{  map_url  }}" class="btn btn-secondary btn-sm">
                             {{ sahis.koordinat1 }}- {{sahis.koordinat2}}</a></td>
+                    <td>{{ sahis.user.username }}</td>
                     <td>
                         <a href="{% url 'sahis_update' sahis.pk %}" class="btn btn-secondary btn-sm">Düzenle</a>
                         <a href="{% url 'sahis_delete' sahis.pk %}" class="btn btn-danger btn-sm">Sil</a>

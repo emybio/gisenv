@@ -3,7 +3,7 @@ from .models import Sahis
 from .forms import SahisForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from wells_map.models import Location
 
 @login_required
 def sahis_list(request):
@@ -21,10 +21,16 @@ def sahis_detail(request, pk):
 @login_required
 def sahis_create(request):
     if request.method == 'POST':
+        lat= request.POST.get("koordinat1")
+        lon= request.POST.get("koordinat2")
+        info=request.POST.get("info")
         form = SahisForm(request.POST)
         if form.is_valid():
-            
-            form.save()
+            location = Location(latitude=lat, longitude=lon, info="")
+            sahis=form.save(commit=False)
+            sahis.user= request.user #işlem yapan kullanıcı 
+            location.save()            
+            sahis.save()
             return redirect('sahis_list')
     else:
         form = SahisForm()

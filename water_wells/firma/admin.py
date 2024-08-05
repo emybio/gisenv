@@ -3,6 +3,6 @@ from .models import Firma
 
 @admin.register(Firma)
 class FirmaAdmin(admin.ModelAdmin):
-    list_display = ('isim', 'meslek', 'diploma_oda_sicil_no')
-    search_fields = ('isim', 'meslek', 'diploma_oda_sicil_no')
+    list_display = ('isim', 'meslek', 'diploma_oda_sicil_no','user')
+    search_fields = ('isim', 'meslek', 'diploma_oda_sicil_no','user')
     #filter_horizontal = ('sahislar',)
