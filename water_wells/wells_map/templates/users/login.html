@@ -1,19 +1,69 @@
 {% extends 'base.html'%}
-
+{% load static %}
 {% block body %}
-{% if form.errors %}
-<div class="error">
-    {% for field in form %}
-        {% for error in field.errors %}
+<link rel="stylesheet" href="{% static 'css/signin.css' %}" />
+<main class="form-signin text-center">
+
+    <form method="post">
+        {% csrf_token %}
+
+        <img class="mb-4" src="{% static '/img/dsi_logo_orjinal_opacity70.png' %}" alt="" width="250" height="125">
+        <h1 class="h3 mb-3 fw-normal ">Lütfen Giriş Yapın</h1>
+
+        <div class="form-floating">
+            {{ form.username.errors }}
+            <input type="text" name="username" placeholder="name@example.com" autofocus="" autocapitalize="none"
+                required="" autocomplete="username" maxlength="150" aria-invalid="true" class="form-control"
+                id="floatingInput">
+
+
+            <label for="floatingInput">Kullanıcı Adı</label>
+        </div>
+        <div class="form-floating">
+
+            {{form.password.errors}}
+            <input type="password" name="password" autocomplete="current-password" required="" aria-invalid="true"
+                class="form-control" id="floatingPassword" placeholder="Password">
+
+            <label for="floatingPassword">Şifre</label>
+        </div>
+
+        <!-- <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div> -->
+
+
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Giriş</button><a href="/register"
+            class="w-100 btn btn-lg btn-info"> Kayıt Yap</a>
+        <p class="mt-5 mb-3 text-muted">&copy; DSİ-2024</p>
+
+
+
+    </form>
+
+</main>
+
+
+
+<!-- 
+
+   {% if form.errors %}
+        <div class="error">
+            {% for field in form %}
+            {% for error in field.errors %}
             <p>{{ error }}</p>
-        {% endfor %}
-    {% endfor %}
-</div>
-{% endif %}
+            {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
 <form method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<button type="submit" class="btn btn-success">Giriş Yap</button>
-<a href="/register" class="btn btn-info"> Kayıt Yap</a>
-</form>
+     {{ form.as_p }}
+   
+    <button type="submit" class="btn btn-success">Giriş Yap</button>
+    <a href="/register" class="w-50 btn btn-lg btn-info"> Kayıt Yap</a>
+</form> -->
+
 {% endblock %}

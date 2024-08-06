@@ -9,3 +9,4 @@ class CustomUser(AbstractUser):
 
     is_premium = models.BooleanField(default=False)
     # Diğer özel alanlarınızı burada tanımlayın
+    

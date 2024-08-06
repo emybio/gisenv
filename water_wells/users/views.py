@@ -66,7 +66,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return render(request,'users/logout.html')
 
 
 @staff_member_required
@@ -79,3 +79,7 @@ def approve_user(request, user_id):
 @login_required
 def profile_view(request):
     return render(request, 'users/profile.html')
+
+def logout_(request):
+    logout(request)
+    return redirect('/users/logout.html/')  # Yönlendirmek istediğiniz sayfa

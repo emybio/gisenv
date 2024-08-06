@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 # TIFF dosyalarının bulunduğu dizin
-#TIFF_DIR = "D:/Projeler/gisenv/water_wells/wells_map/static/tiff"
-TIFF_DIR = "C:/Users/kur06/Documents/GitHub/gisenv/water_wells/wells_map/static/tiff"
+TIFF_DIR = "D:/Projeler/gisenv/water_wells/wells_map/static/tiff"
+#TIFF_DIR = "C:/Users/kur06/Documents/GitHub/gisenv/water_wells/wells_map/static/tiff"
 
 
 @login_required
