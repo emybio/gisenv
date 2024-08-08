@@ -28,3 +28,8 @@ def get_kml_data(request):
 def kmz_home(request):
     
     return render(request,'kmz/index.html')
+
+@login_required 
+def kml_display(request):
+    
+    return render(request,'kmz/kml_map.html')

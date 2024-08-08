@@ -6,22 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KML Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar-v2@3.0.0/css/leaflet-sidebar.min.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-sidebar-v2@3.0.0/js/leaflet-sidebar.min.js"></script>
     <script src="https://unpkg.com/leaflet-omnivore@latest/leaflet-omnivore.min.js"></script>
     <style>
         #map {
             height: 500px;
-        }
-        #kml-files {
-            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <h1>KML Map</h1>
 
-    <div id="kml-files"></div>
-    
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
+            </ul>
+        </div>
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">KML Files<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <div>
+                    <input type="checkbox" id="toggle-all" />
+                    <label for="toggle-all">Toggle All</label>
+                </div>
+                <div id="kml-files"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="map"></div>
 
     <script>
@@ -31,6 +46,15 @@
             maxZoom: 18,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
+
+        var sidebar = L.control.sidebar({
+            autopan: true,       // whether to maintain the centered map point when opening the sidebar
+            closeButton: true,   // whether to add a close button to the panes
+            container: 'sidebar', // the DOM container or #ID of a predefined sidebar container that should be used
+            position: 'left',    // left or right
+        }).addTo(map);
+
+        sidebar.open('home');
 
         const kmlLayers = {};
 
@@ -52,54 +76,58 @@
                     label.appendChild(document.createTextNode(file));
 
                     checkbox.addEventListener('change', function() {
-                        if (this.checked) {
-                            // Checkbox seçildiğinde KML dosyasını yükle ve haritaya ekle
-                            fetch(`/kmz/api/get-kml-data/?filename=${file}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    const kmlText = data.kml_data;
-                                    console.log(`KML Text for ${file}:`, kmlText); // Debug: KML içeriğini konsola yazdır
-
-                                    try {
-                                        var kmlLayer = omnivore.kml.parse(kmlText);
-                                        kmlLayer.addTo(map);
-                                        
-                                        //layer tıklandığında bilgiler alert olarak gelir
-                                        // kmlLayer.on('click', function(e) {
-                                        //     const info = e.sourceTarget.feature;
-                                        //     alert(`Clicked on: ${info.properties.name}`);
-                                        // });
-
-                                        kmlLayer.eachLayer(function(layer) {
-                                            var name = layer.feature.properties.name || "No name";
-                                            var description = layer.feature.properties.description || "No description";
-                                            layer.bindPopup("<b>" + name + "</b><br>" + description);
-                                        });
-
-
-
-
-                                        kmlLayers[file] = kmlLayer;
-                                    } catch (error) {
-                                        console.error(`Error adding KML Layer for ${file}:`, error); // Debug: Katman ekleme hatası
-                                    }
-                                })
-                                .catch(err => console.log('Failed to load KML: ', err));
-                        } else {
-                            // Checkbox kaldırıldığında KML dosyasını haritadan kaldır
-                            if (kmlLayers[file]) {
-                                console.log(`Removing KML Layer for ${file}`); // Debug: KML katmanını haritadan kaldır
-                                map.removeLayer(kmlLayers[file]);
-                                delete kmlLayers[file];
-                            }
-                        }
+                        handleCheckboxChange(file, this.checked);
                     });
 
                     kmlFilesContainer.appendChild(checkbox);
                     kmlFilesContainer.appendChild(label);
                     kmlFilesContainer.appendChild(document.createElement('br'));
                 });
+
+                document.getElementById('toggle-all').addEventListener('change', function() {
+                    const isChecked = this.checked;
+                    kmlFiles.forEach(file => {
+                        const checkbox = document.getElementById(file);
+                        checkbox.checked = isChecked;
+                        handleCheckboxChange(file, isChecked);
+                    });
+                });
             });
+
+        function handleCheckboxChange(file, isChecked) {
+            if (isChecked) {
+                // Checkbox seçildiğinde KML dosyasını yükle ve haritaya ekle
+                fetch(`/kmz/api/get-kml-data/?filename=${file}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const kmlText = data.kml_data;
+                        console.log(`KML Text for ${file}:`, kmlText); // Debug: KML içeriğini konsola yazdır
+
+                        try {
+                            var kmlLayer = omnivore.kml.parse(kmlText);
+                            kmlLayer.addTo(map);
+
+                            kmlLayer.eachLayer(function(layer) {
+                                var name = layer.feature.properties.name || "No name";
+                                var description = layer.feature.properties.description || "No description";
+                                layer.bindPopup("<b>" + name + "</b><br>" + description);
+                            });
+
+                            kmlLayers[file] = kmlLayer;
+                        } catch (error) {
+                            console.error(`Error adding KML Layer for ${file}:`, error); // Debug: Katman ekleme hatası
+                        }
+                    })
+                    .catch(err => console.log('Failed to load KML: ', err));
+            } else {
+                // Checkbox kaldırıldığında KML dosyasını haritadan kaldır
+                if (kmlLayers[file]) {
+                    console.log(`Removing KML Layer for ${file}`); // Debug: KML katmanını haritadan kaldır
+                    map.removeLayer(kmlLayers[file]);
+                    delete kmlLayers[file];
+                }
+            }
+        }
     </script>
 </body>
 </html>
