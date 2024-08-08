@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>YAS Sulama Alanı_36_Burak2021.kmz</name>
+	<visibility>0</visibility>
+	<Style id="PolyStyle401">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ff6e6e6e</color>
+			<width>0.4</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>8000ffaa</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="PolyStyle4010">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#PolyStyle401</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#PolyStyle4012</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="PolyStyle4012">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ff6e6e6e</color>
+			<width>0.4</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>8000ffaa</color>
+		</PolyStyle>
+	</Style>
+	<Folder id="FeatureLayer4">
+		<name>YAS Sulama Alanı</name>
+		<visibility>0</visibility>
+		<Snippet maxLines="0"></Snippet>
+		<Placemark id="ID_40000">
+			<name>Işıklı Sulama Kooperatifi</name>
+			<visibility>0</visibility>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Işıklı Sulama Kooperatifi</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Adı</td>
+
+<td>Işıklı Sulama Kooperatifi</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>2856.001258</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>374296.11887</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle4010</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								33.68159612873729,36.20788888897098,0 33.68637372677113,36.20489893857256,0 33.68765019164372,36.2054641024977,0 33.68837798058518,36.20588928817438,0 33.68926722262278,36.20659978476849,0 33.6902980083721,36.2073380829297,0 33.69124039033355,36.20806256988355,0 33.69221848611853,36.20882978014306,0 33.69273630281301,36.20947083687747,0 33.69281249428508,36.21010013597861,0 33.69250217470903,36.21096066958913,0 33.69203214817198,36.21173625197342,0 33.6915252778887,36.21234029737719,0 33.69121103453724,36.21275716917382,0 33.69082463419646,36.21300270872275,0 33.69047204393197,36.21307630486477,0 33.68981758393512,36.21296558148411,0 33.68931793166894,36.2123816571947,0 33.689030088489,36.21178219857634,0 33.68852881859306,36.21101222017062,0 33.68790456284729,36.21031450869445,0 33.6873515848375,36.20968794481964,0 33.68674626098071,36.20913324085598,0 33.68607155503321,36.20872205408059,0 33.68497301925571,36.20831329004186,0 33.68421152511394,36.20807433755409,0 33.6829563079114,36.20792407197631,0 33.68237340983523,36.20791308422085,0 33.68159612873729,36.20788888897098,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_40001">
+			<name>Hacıishaklı Sulama Kooperatifi</name>
+			<visibility>0</visibility>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Hacıishaklı Sulama Kooperatifi</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Adı</td>
+
+<td>Hacıishaklı Sulama Kooperatifi</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>5800.188187</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>2049300.784718</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle4010</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								33.68637372677113,36.20489893857256,0 33.68159612873729,36.20788888897098,0 33.68057532967826,36.20829544256529,0 33.67922046278061,36.20887563221149,0 33.67823631664354,36.20943939330008,0 33.67693266855596,36.20981889389417,0 33.67520048652725,36.20965693218723,0 33.67332433209317,36.20918088454806,0 33.67054057791189,36.20789409376396,0 33.66890795348504,36.20697292966685,0 33.66663938442363,36.20602666322186,0 33.66490185737985,36.20522052614935,0 33.66337615437898,36.20439887860345,0 33.66255888994709,36.20381660058387,0 33.66220137015071,36.20330333541762,0 33.66206932127304,36.20230220283283,0 33.66213151723912,36.20129999544915,0 33.66267012211817,36.20025221433836,0 33.66352281127978,36.19875900713584,0 33.66434402223008,36.19772396403795,0 33.66516521279074,36.19668891444489,0 33.66566843157484,36.1956413160401,0 33.66605167561045,36.19502375320837,0 33.6663653777001,36.19453538742845,0 33.66685795014692,36.19431795949844,0 33.66799090424283,36.19465513859787,0 33.66877340594772,36.19530913642776,0 33.67084806965438,36.19632801484645,0 33.6729914568848,36.19711747319376,0 33.67549012909834,36.19814819735483,0 33.67758273497291,36.19918116840876,0 33.67916380538698,36.20027425576659,0 33.68049844516584,36.20145459744911,0 33.68184941858904,36.20247739519786,0 33.68424478864377,36.20378045711944,0 33.68637372677113,36.20489893857256,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_40002">
+			<name>Akdere Sulama Kooperatifi</name>
+			<visibility>0</visibility>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Akdere Sulama Kooperatifi</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Adı</td>
+
+<td>Akdere Sulama Kooperatifi</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>3441.260617</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>621681.075404</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle4010</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								33.80572228352613,36.25343261958201,0 33.80504995903534,36.25335127467862,0 33.80427161912211,36.25327063797246,0 33.80346131143992,36.25351938846757,0 33.802087618268,36.25397228248284,0 33.80071434711016,36.25446809387998,0 33.79810663671999,36.25521543755982,0 33.79567325499013,36.25573257187502,0 33.79399517295847,36.25580097069014,0 33.79261415361108,36.25553820103706,0 33.79197470826732,36.25521325898244,0 33.79161524324729,36.2546145307013,0 33.79187523649793,36.25411188723611,0 33.79245096759804,36.25337815760513,0 33.79307955146254,36.25262976306992,0 33.79414840739671,36.25173532247737,0 33.79620481640947,36.25064824649788,0 33.79798210616485,36.24992079889316,0 33.7994461481693,36.24961001523594,0 33.80089557458965,36.24961016501162,0 33.80188749521405,36.24995193042845,0 33.80321397272176,36.25007183944383,0 33.80446743132943,36.24996323160345,0 33.80591935754335,36.25025401240494,0 33.80647032749577,36.25056516402693,0 33.80729090040696,36.25131816930803,0 33.80763736509903,36.25236061156365,0 33.80748614713208,36.25312017185348,0 33.80672944855307,36.25342583190299,0 33.80572228352613,36.25343261958201,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

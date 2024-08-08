@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KML Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-omnivore@latest/leaflet-omnivore.min.js"></script>
+    <style>
+        #map {
+            height: 500px;
+        }
+        #kml-files {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>KML Map</h1>
+
+    <div id="kml-files"></div>
+    
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([39.9334, 32.8597], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        const kmlLayers = {};
+
+        // KML dosyalarını yükle
+        fetch('/kmz/api/get-kml-files/')
+            .then(response => response.json())
+            .then(data => {
+                const kmlFiles = data.kml_files;
+                const kmlFilesContainer = document.getElementById('kml-files');
+                kmlFiles.forEach(file => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = file;
+                    checkbox.name = 'kml_files';
+                    checkbox.value = file;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = file;
+                    label.appendChild(document.createTextNode(file));
+
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                            // Checkbox seçildiğinde KML dosyasını yükle ve haritaya ekle
+                            fetch(`/kmz/api/get-kml-data/?filename=${file}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const kmlText = data.kml_data;
+                                    console.log(`KML Text for ${file}:`, kmlText); // Debug: KML içeriğini konsola yazdır
+
+                                    try {
+                                        var kmlLayer = omnivore.kml.parse(kmlText);
+                                        kmlLayer.addTo(map);
+                                        
+                                        //layer tıklandığında bilgiler alert olarak gelir
+                                        // kmlLayer.on('click', function(e) {
+                                        //     const info = e.sourceTarget.feature;
+                                        //     alert(`Clicked on: ${info.properties.name}`);
+                                        // });
+
+                                        kmlLayer.eachLayer(function(layer) {
+                                            var name = layer.feature.properties.name || "No name";
+                                            var description = layer.feature.properties.description || "No description";
+                                            layer.bindPopup("<b>" + name + "</b><br>" + description);
+                                        });
+
+
+
+
+                                        kmlLayers[file] = kmlLayer;
+                                    } catch (error) {
+                                        console.error(`Error adding KML Layer for ${file}:`, error); // Debug: Katman ekleme hatası
+                                    }
+                                })
+                                .catch(err => console.log('Failed to load KML: ', err));
+                        } else {
+                            // Checkbox kaldırıldığında KML dosyasını haritadan kaldır
+                            if (kmlLayers[file]) {
+                                console.log(`Removing KML Layer for ${file}`); // Debug: KML katmanını haritadan kaldır
+                                map.removeLayer(kmlLayers[file]);
+                                delete kmlLayers[file];
+                            }
+                        }
+                    });
+
+                    kmlFilesContainer.appendChild(checkbox);
+                    kmlFilesContainer.appendChild(label);
+                    kmlFilesContainer.appendChild(document.createElement('br'));
+                });
+            });
+    </script>
+</body>
+</html>

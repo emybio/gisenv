@@ -14,7 +14,9 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR'i pathlib.Path kullanarak tanımlayın
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -57,6 +59,7 @@ INSTALLED_APPS = [
     "serverraster",
     "georaster",
     "users",
+    "kmz",
 ]
 
 MIDDLEWARE = [
@@ -148,9 +151,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 
-STATIC_URL = "/static/"
-
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# Statik dosya ayarları
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

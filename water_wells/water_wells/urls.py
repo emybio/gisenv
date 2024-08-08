@@ -22,6 +22,7 @@ urlpatterns = [
     path('georaster/', include('georaster.urls')),
     path('serverraster/', include('serverraster.urls')),
     path('',include('users.urls')),
+    path('kmz/',include('kmz.urls')),
 ]
 # handler404 = views.custom_404
 # handler500= views.custom_500

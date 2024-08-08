@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document id="ısın_mesrubat" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<name>ısın_mesrubat</name>
+	<Snippet maxLines="0"></Snippet>
+	<Style id="PolyStyle006000">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>7f000000</color>
+			<width>0.4</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="PolyStyle0221">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>7f6e6e6e</color>
+			<width>0.4</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0055ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="PolyStyle0360">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>7f6e6e6e</color>
+			<width>0.4</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00aaff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="PolyStyle04100">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>7f6e6e6e</color>
+			<width>0.4</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7fbebeff</color>
+		</PolyStyle>
+	</Style>
+	<Folder id="FeatureLayer0">
+		<name>ısın_mesrubat</name>
+		<Snippet maxLines="0"></Snippet>
+		<Placemark id="ID_00000">
+			<name>Mutlak</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Mutlak</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Nitelik</td>
+
+<td>Mutlak</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>1042.946108</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>78492.703219</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle006000</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.18772645423917,36.3809336112185,0 36.18679532189231,36.38222311492773,0 36.18531891440553,36.38227772434877,0 36.18405351766916,36.38159215462713,0 36.1839967578005,36.38010053770638,0 36.18582176254294,36.37957727381431,0 36.18757557719815,36.38000608346673,0 36.18772645423917,36.3809336112185,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_00001">
+			<name>Mutlak</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Mutlak</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Nitelik</td>
+
+<td>Mutlak</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>1092.60042</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>75632.339008</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle006000</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.19066869177929,36.3718179965523,0 36.18843953758929,36.37128862370143,0 36.18855930084682,36.37000980247172,0 36.19135002762291,36.36927074275832,0 36.19264100064498,36.36924149842086,0 36.19244444452209,36.37060793709434,0 36.19176018179739,36.37118795436869,0 36.19066869177929,36.3718179965523,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_00002">
+			<name>Kısa</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Kısa</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Nitelik</td>
+
+<td>Kısa</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>11255.026564</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>3732750.181675</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle0221</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.19932630574864,36.38629835549019,0 36.19590226723351,36.38925813336677,0 36.18755725688626,36.38861469309987,0 36.17585256148417,36.37894957330278,0 36.17847504659704,36.37471959677744,0 36.17933065112321,36.37450137348963,0 36.17883268328544,36.37094274488553,0 36.18196620447656,36.36785736765689,0 36.19360632747696,36.36494237254065,0 36.19823839978837,36.36525981344937,0 36.20091787286809,36.36556111452143,0 36.20201723584968,36.37190570290473,0 36.19107387215168,36.37489751234087,0 36.19483449805615,36.37999329688284,0 36.19932630574864,36.38629835549019,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+					<innerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.1839967578005,36.38010053770638,0 36.18405351766916,36.38159215462713,0 36.18531891440553,36.38227772434877,0 36.18679532189231,36.38222311492773,0 36.18772645423917,36.3809336112185,0 36.18757557719815,36.38000608346673,0 36.18582176254294,36.37957727381431,0 36.1839967578005,36.38010053770638,0 
+							</coordinates>
+						</LinearRing>
+						<LinearRing>
+							<coordinates>
+								36.19244444452209,36.37060793709434,0 36.19264100064498,36.36924149842086,0 36.19135002762291,36.36927074275832,0 36.18855930084682,36.37000980247172,0 36.18843953758929,36.37128862370143,0 36.19066869177929,36.3718179965523,0 36.19176018179739,36.37118795436869,0 36.19244444452209,36.37060793709434,0 
+							</coordinates>
+						</LinearRing>
+					</innerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_00003">
+			<name>Orta</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Orta</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Nitelik</td>
+
+<td>Orta</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>26441.240905</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>12139544.22308</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle0360</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.21041720231338,36.39257825210058,0 36.21842088948878,36.40301824005078,0 36.21070491265898,36.40515105623204,0 36.19225924473211,36.40214327175961,0 36.18177298103376,36.39603036579073,0 36.17999553516752,36.39502268028785,0 36.17837813792451,36.39448371887062,0 36.17736666027846,36.39431673407212,0 36.17434002250285,36.3936013126678,0 36.17219617143263,36.39294250290594,0 36.17020971521451,36.39282388498422,0 36.16458967742056,36.39165326677382,0 36.16038164748237,36.38815540795553,0 36.15751412618133,36.38551196733143,0 36.15502177857583,36.3750087918786,0 36.1569752657126,36.37480497077304,0 36.1576356660769,36.37124405186513,0 36.16496309948767,36.37041684025127,0 36.17024999419623,36.36975541996253,0 36.1712273083762,36.36963551722802,0 36.17246715834264,36.36959335834443,0 36.17783301848303,36.367967769813,0 36.17863871949124,36.36770068096861,0 36.18248395000447,36.36653966325744,0 36.18660577689123,36.36506313616093,0 36.18916811179066,36.36390742333218,0 36.19438606489133,36.36145495326893,0 36.19711706226982,36.36008544565284,0 36.20258634960285,36.36338505910628,0 36.20644388455348,36.3709298132861,0 36.20235196972001,36.37486371927891,0 36.20284939854927,36.37497075435718,0 36.20363335035099,36.37613366245592,0 36.20868806876095,36.38238003290564,0 36.21041720231338,36.39257825210058,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+					<innerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.19483449805615,36.37999329688284,0 36.19118252779374,36.37504475538378,0 36.19944871656247,36.37260802399354,0 36.20191939863079,36.37187956540696,0 36.20087684590608,36.3655565017569,0 36.19823839978837,36.36525981344937,0 36.19360632747696,36.36494237254065,0 36.18196620447656,36.36785736765689,0 36.18014660116064,36.36964905606025,0 36.17885131393788,36.37107588861352,0 36.17896390916329,36.37188054499798,0 36.17946317175468,36.37483236609487,0 36.17846150657215,36.37480869339034,0 36.1758818324284,36.37897374763515,0 36.18292005634965,36.38478594766584,0 36.18390438132996,36.3856273840265,0 36.18469156096754,36.38627204622473,0 36.18741925665831,36.38850578104232,0 36.187426084931,36.38850639706494,0 36.19492349468794,36.38918269560247,0 36.19590226723351,36.38925813336677,0 36.19877425192136,36.38677557992847,0 36.19932630574864,36.38629835549019,0 36.19483449805615,36.37999329688284,0 
+							</coordinates>
+						</LinearRing>
+					</innerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_00004">
+			<name>Uzun</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>Uzun</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>SHAPE</td>
+
+<td>Polygon</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>Nitelik</td>
+
+<td>Uzun</td>
+
+</tr>
+
+<tr>
+
+<td>SHAPE_Length</td>
+
+<td>38973.520284</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SHAPE_Area</td>
+
+<td>12267258.053896</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle04100</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.2207258242545,36.40695622871532,0 36.20669042762458,36.40602196067632,0 36.19737761748259,36.4053743978177,0 36.19014151900443,36.40481079419038,0 36.17843797852354,36.40421273683458,0 36.16687898570442,36.40405659363946,0 36.15982784362708,36.39518582709979,0 36.15713041391799,36.39231990099989,0 36.1545090159533,36.38939611980149,0 36.15189650831362,36.38623405346305,0 36.14872758684554,36.38216448293638,0 36.14718334057791,36.38004121307247,0 36.14294938362528,36.37487304707132,0 36.14509175987899,36.37474547502706,0 36.14292851582974,36.37141513602303,0 36.15414270892482,36.36709299171719,0 36.16707060102863,36.36222625422406,0 36.16950314228956,36.36099635484305,0 36.17519323843968,36.358949359362,0 36.18020356371022,36.35735099955019,0 36.18876827100737,36.35404782830363,0 36.19562273020941,36.35156227418459,0 36.20184694305783,36.36172304807572,0 36.20551907483237,36.36785367197879,0 36.20995272599903,36.37496769841302,0 36.21083146566585,36.37513130174255,0 36.21557536115462,36.38225237934188,0 36.22725380066769,36.39965664237788,0 36.2207258242545,36.40695622871532,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+					<innerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								36.20258634960285,36.36338505910628,0 36.19711706226982,36.36008544565284,0 36.19438606489133,36.36145495326893,0 36.18916811179066,36.36390742333218,0 36.18660577689123,36.36506313616093,0 36.18248395000447,36.36653966325744,0 36.17863871949124,36.36770068096861,0 36.17783301848303,36.367967769813,0 36.17246715834264,36.36959335834443,0 36.1712273083762,36.36963551722802,0 36.17024999419623,36.36975541996253,0 36.16496309948767,36.37041684025127,0 36.1576356660769,36.37124405186513,0 36.1569752657126,36.37480497077304,0 36.15502177857583,36.3750087918786,0 36.15751412618133,36.38551196733143,0 36.16038164748237,36.38815540795553,0 36.16458967742056,36.39165326677382,0 36.17020971521451,36.39282388498422,0 36.17219617143263,36.39294250290594,0 36.17434002250285,36.3936013126678,0 36.17736666027846,36.39431673407212,0 36.17837813792451,36.39448371887062,0 36.17999553516752,36.39502268028785,0 36.18119251587341,36.39570128864104,0 36.18156128296423,36.39591035024768,0 36.18177298103376,36.39603036579073,0 36.18300294014618,36.3967474578434,0 36.19225924473211,36.40214327175961,0 36.21070491265898,36.40515105623204,0 36.21842088948878,36.40301824005078,0 36.21041720231338,36.39257825210058,0 36.20868806876095,36.38238003290564,0 36.20363335035099,36.37613366245592,0 36.20284939854927,36.37497075435718,0 36.20235196972001,36.37486371927891,0 36.20644388455348,36.3709298132861,0 36.20258634960285,36.36338505910628,0 
+							</coordinates>
+						</LinearRing>
+					</innerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

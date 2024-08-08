@@ -1,24 +1,30 @@
 <!-- goodbye.html -->
 {% extends 'base.html' %}
 {% load static %}
+
 <link rel="stylesheet" href="{% static 'css/signi.css' %}" />
 {% block body %}
-   
+
 <div class="container col-md-4  pt-5 mt-5">
 
     <main class="form-signin text-center">
 
-    
-    
-            <img class="mb-4" src="{% static '/img/dsi_logo_orjinal_opacity70.png' %}" alt="" width="250" height="125">
-            
-            <h1>Çıkış Yapıldı</h1>
-            <p>Başarıyla çıkış yaptınız. Geri dönmek için <a href="{% url 'login' %}">Giriş sayfasına</a> gidin.</p>
-    
-           
-    
+
+        <img class="mb-4" src="{% static '/img/dsi_logo_orjinal_opacity70.png' %}" alt="" width="250" height="125">
+
+        <h1>Çıkış Yapıldı</h1>
+        <p>Başarıyla çıkış yaptınız. Geri dönmek için <a href="{% url 'login' %}">Giriş sayfasına</a> gidin.</p>
+
+
+
     </main>
 
 </div>
-    
+<script>
+
+    setTimeout(function () {
+        window.location.replace("http://127.0.0.1:8000/login/");
+    }, 2000);
+
+</script>
 {% endblock %}
