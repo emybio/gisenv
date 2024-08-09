@@ -6,6 +6,7 @@ from kmz import views
 
 urlpatterns = [
     path('', views.kmz_home), 
+    path('kml-display/',views.kml_display,name="kml-display"),
     path('api/get-kml-files/', views.get_kml_files, name='get_kml_files'),
     path('api/get-kml-data/', views.get_kml_data, name='get_kml_data'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
