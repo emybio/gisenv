@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Yerler{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% csrf_token %}
+    <label for="id_il">İl:</label>
+    <select id="id_il" name="il">
+        <option value="">Seçin</option>
+        {% for il in iller %}
+        <option value="{{ il.id }}">{{ il.ad }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="id_ilce">İlçe:</label>
+    <select id="id_ilce" name="ilce">
+        <option value="">Seçin</option>
+    </select>
+
+    <label for="id_semt">Semt:</label>
+    <select id="id_semt" name="semt">
+        <option value="">Seçin</option>
+    </select>
+
+    <label for="id_mahalle">Mahalle:</label>
+    <select id="id_mahalle" name="mahalle">
+        <option value="">Seçin</option>
+    </select>
+</form>
+<script>
+    $(document).ready(function () {
+        var $ilceSelect = $('#id_ilce');
+        var $semtSelect = $('#id_semt');
+        var $mahalleSelect = $('#id_mahalle');
+
+        $('#id_il').change(function () {
+            var il_id = $(this).val();
+          
+            $.ajax({
+                url: '{% url "get_ilceler" %}',
+                data: {
+                    'il_id': il_id
+                },
+                success: function (data) {
+
+                    $ilceSelect.empty();
+                    $semtSelect.empty();
+                    $mahalleSelect.empty();
+                    $ilceSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $semtSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $.each(data, function (index, item) {
+                        $ilceSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.ad
+                        }));
+                    });
+                }, error: function (xhr, ajaxOptions, thrownError) {
+                    $ilceSelect.empty();
+                    $semtSelect.empty();
+                    $mahalleSelect.empty();
+
+                    $ilceSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $semtSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                }
+            });
+        });
+
+        $('#id_ilce').change(function () {
+            var ilce_id = $(this).val();
+            $.ajax({
+                url: '{% url "get_semtler" %}',
+                data: {
+                    'ilce_id': ilce_id
+                },
+                success: function (data) {
+
+                    $semtSelect.empty();
+                    $mahalleSelect.empty();
+                    $semtSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $.each(data, function (index, item) {
+                        $semtSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.ad
+                        }));
+                    });
+                }
+            });
+        });
+
+        $('#id_semt').change(function () {
+            var semt_id = $(this).val();
+            $.ajax({
+                url: '{% url "get_mahalleler" %}',
+                data: {
+                    'semt_id': semt_id
+                },
+                success: function (data) {
+
+                    $mahalleSelect.empty();
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Seçin"
+                    }));
+                    $.each(data, function (index, item) {
+
+
+                        $mahalleSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.ad
+                        }));
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

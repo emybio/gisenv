@@ -16,13 +16,13 @@ urlpatterns = [
     #path('', include('leaflet.urls')),
     path('shape/', include('shape.urls')),
     path('projection/', include('projection.urls')),
-    path('sahis/', include('sahis.urls')),
+    path('basvuru/', include('sahis.urls')),
     path('firma/', include('firma.urls')),
     path('pngraster/', include('pngraster.urls')),
     path('georaster/', include('georaster.urls')),
     path('serverraster/', include('serverraster.urls')),
     path('',include('users.urls')),
     path('kmz/',include('kmz.urls')),
-]
+    path('turkiye/',include('turkiye.urls')),]
 # handler404 = views.custom_404
 # handler500= views.custom_500

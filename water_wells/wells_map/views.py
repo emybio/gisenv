@@ -57,6 +57,7 @@ def edit_location(request, pk):
         if form.is_valid():
             form.save()
             return redirect("location_list")
+        
     else:
         form = LocationForm(instance=location)
     return render(request, "maps/edit_location.html", {"form": form})

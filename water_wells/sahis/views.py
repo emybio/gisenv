@@ -5,21 +5,24 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from wells_map.models import Location
 
+from turkiye.models import Il
+
 @login_required
-def sahis_list(request):
-    sahislar = Sahis.objects.all()
+def basvuru_list(request):
+    basvurular = Sahis.objects.all()
     map_url = reverse('location_list')
     print("maps : ")
     print(map_url)
-    return render(request, 'sahis/sahis_list.html', {'sahislar': sahislar,'map_url':map_url})
+    return render(request, 'basvuru/basvuru_list.html', {'basvurular': basvurular,'map_url':map_url})
 
 @login_required
-def sahis_detail(request, pk):
-    sahis = get_object_or_404(Sahis, pk=pk)
-    return render(request, 'sahis/sahis_detail.html', {'sahis': sahis})
+def basvuru_detail(request, pk):
+    basvuru = get_object_or_404(Sahis, pk=pk)
+    return render(request, 'basvuru/basvuru_detail.html', {'basvuru': basvuru})
 
 @login_required
-def sahis_create(request):
+def basvuru_create(request):
+    iller = Il.objects.all()
     if request.method == 'POST':
         lat= request.POST.get("koordinat1")
         lon= request.POST.get("koordinat2")
@@ -27,33 +30,33 @@ def sahis_create(request):
         form = SahisForm(request.POST)
         if form.is_valid():
             location = Location(latitude=lat, longitude=lon, info="")
-            sahis=form.save(commit=False)
-            sahis.user= request.user #işlem yapan kullanıcı 
+            basvuru=form.save(commit=False)
+            basvuru.user= request.user #işlem yapan kullanıcı 
             location.save()            
-            sahis.save()
-            return redirect('sahis_list')
+            basvuru.save()
+            return redirect('basvuru_list')
     else:
         form = SahisForm()
-    return render(request, 'sahis/sahis_form.html', {'form': form})
+    return render(request, 'basvuru/basvuru_form.html', {'form': form,'iller':iller})
 
 @login_required
-def sahis_update(request, pk):
-    sahis = get_object_or_404(Sahis, pk=pk)
+def basvuru_update(request, pk):
+    basvuru = get_object_or_404(Sahis, pk=pk)
     if request.method == 'POST':
-        form = SahisForm(request.POST, instance=sahis)
+        form = SahisForm(request.POST, instance=basvuru)
         if form.is_valid():
             form.save()
-            return redirect('sahis_list')
+            return redirect('basvuru_list')
     else:
-        form = SahisForm(instance=sahis)
-    return render(request, 'sahis/sahis_form.html', {'form': form})
+        form = SahisForm(instance=basvuru)
+    return render(request, 'basvuru/basvuru_form.html', {'form': form})
 
 @login_required
-def sahis_delete(request, pk):
-    sahis = get_object_or_404(Sahis, pk=pk)
+def basvuru_delete(request, pk):
+    basvuru = get_object_or_404(Sahis, pk=pk)
     if request.method == 'POST':
-        sahis.delete()
-        return redirect('sahis_list')
-    return render(request, 'sahis/sahis_confirm_delete.html', {'sahis': sahis})
+        basvuru.delete()
+        return redirect('basvuru_list')
+    return render(request, 'basvuru/basvuru_confirm_delete.html', {'basvuru': basvuru})
 
 

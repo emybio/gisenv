@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Sahis Formu{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="card col-6">
+        <div class="card-header">
+            <h2>Başvuru Formu</h2>
+        </div>
+        <div class="card-body ">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group mb-2 mr-2">
+                    <label for="{{ field.id_for_label }}" class="mr-2">{{ field.label }}</label>
+                   
+                    {% if field.name == "mahalle" %}
+                    <select id="id_il" name="il"  class="form-control form-control-sm">
+                        <option value="">Seçin</option>
+                        {% for il in iller %}
+                        <option value="{{ il.id }}">{{ il.ad }}</option>
+                        {% endfor %}
+                    </select>
+                
+                    <label for="id_ilce">İlçe:</label>
+                    <select id="id_ilce" name="ilce"  class="form-control form-control-sm">
+                        <option value="">Seçin</option>
+                    </select>
+                
+                    <label for="id_semt">Semt:</label>
+                    <select id="id_semt" name="semt" class="form-control form-control-sm" >
+                        <option value="">Seçin</option>
+                    </select>
+                    
+                   
+                       
+                   
+                    {% endif %}
+
+
+                    {% if field.name == "firma" %}
+                    <select name="{{ field.name }}" id="{{ field.id_for_label }}"
+                        class="form-control form-control-sm{% if field.errors %} is-invalid{% endif %}">
+                        <option value="">Firma Seçiniz </option>
+                        {% for choice in field.field.queryset %}
+
+                        <option value="{{ choice.pk }}" {% if choice.pk == field.value %}selected{% endif %}>{{ choice }}
+
+                        </option>
+
+                        {% endfor %}
+                    </select>
+                    {% else %}
+                    <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
+                        id="{{ field.id_for_label }}"
+                        class="form-control form-control-sm{% if field.errors %} is-invalid{% endif %}"
+                        value="{{ field.value|default:'' }}">
+                    {% endif %}
+
+
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary btn-sm">Kaydet</button>
+            </form>
+        </div>
+    </div>
+    <a href="{% url 'basvuru_list' %}" class="btn btn-secondary btn-sm mt-3">Geri Dön</a>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#id_il').change(function () {
+            
+            var il_id = $(this).val();
+            $.ajax({
+                url: '{% url "get_ilceler" %}',
+                data: {
+                    'il_id': il_id
+                },
+                success: function (data) {
+                    var $ilceSelect = $('#id_ilce');
+                    $ilceSelect.empty();
+                    $.each(data, function (index, item) {
+                        $ilceSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.ad
+                        }));
+                    });
+                }
+            });
+        });
+
+        $('#id_ilce').change(function () {
+            var ilce_id = $(this).val();
+            $.ajax({
+                url: '{% url "get_semtler" %}',
+                data: {
+                    'ilce_id': ilce_id
+                },
+                success: function (data) {
+                    var $semtSelect = $('#id_semt');
+                    $semtSelect.empty();
+                    $.each(data, function (index, item) {
+                        $semtSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.ad
+                        }));
+                    });
+                }
+            });
+        });
+
+        $('#id_semt').change(function () {
+            var semt_id = $(this).val();
+            $.ajax({
+                url: '{% url "get_mahalleler" %}',
+                data: {
+                    'semt_id': semt_id
+                },
+                success: function (data) {
+                    var $mahalleSelect = $('#id_mahalle');
+                    $mahalleSelect.empty();
+                    $.each(data, function (index, item) {
+                        $mahalleSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.ad
+                        }));
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

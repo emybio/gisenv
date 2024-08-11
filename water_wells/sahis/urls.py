@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import sahis_create,sahis_delete,sahis_detail,sahis_list,sahis_update
+from .views import basvuru_create,basvuru_delete,basvuru_detail,basvuru_list,basvuru_update
 
 urlpatterns = [
-    path('', sahis_list, name='sahis_list'),
-    path('<int:pk>/', sahis_detail, name='sahis_detail'),
-    path('create/', sahis_create, name='sahis_create'),
-    path('<int:pk>/update/', sahis_update, name='sahis_update'),
-    path('<int:pk>/delete/', sahis_delete, name='sahis_delete'),
+    path('', basvuru_list, name='basvuru_list'),
+    path('<int:pk>/', basvuru_detail, name='basvuru_detail'),
+    path('create/', basvuru_create, name='basvuru_create'),
+    path('<int:pk>/update/', basvuru_update, name='basvuru_update'),
+    path('<int:pk>/delete/', basvuru_delete, name='basvuru_delete'),
 ]

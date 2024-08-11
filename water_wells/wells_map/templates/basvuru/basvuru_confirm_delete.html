@@ -3,14 +3,14 @@
 {% block body %}
 <div class="card">
     <div class="card-header">
-        <h2>Sahis Sil</h2>
+        <h2>Başvuru Sil</h2>
     </div>
     <div class="card-body">
-        <p>{{ sahis.isim }} adlı kişiyi silmek istediğinize emin misiniz?</p>
+        <p>{{ basvuru.isim }} adlı kişiyi silmek istediğinize emin misiniz?</p>
         <form method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Evet, Sil</button>
-            <a href="{% url 'sahis_list' %}" class="btn btn-secondary">İptal</a>
+            <a href="{% url 'basvuru_list' %}" class="btn btn-secondary">İptal</a>
         </form>
     </div>
 </div>

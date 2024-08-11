@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>KML Map</h1>
 
@@ -27,12 +29,14 @@
         </div>
         <div class="leaflet-sidebar-content">
             <div class="leaflet-sidebar-pane" id="home">
-                <h1 class="leaflet-sidebar-header">KML Files<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <h1 class="leaflet-sidebar-header">KML Files<span class="leaflet-sidebar-close"><i
+                            class="fa fa-caret-left"></i></span></h1>
                 <div>
                     <input type="checkbox" id="toggle-all" />
                     <label for="toggle-all">Toggle All</label>
                 </div>
                 <div id="kml-files"></div>
+                <button id="clear-layers" style="margin-top: 10px;">Clear Layers</button>
             </div>
         </div>
     </div>
@@ -56,7 +60,7 @@
 
         sidebar.open('home');
 
-        const kmlLayers = {};
+        const kmlLayers = {};  // Tüm KML katmanlarını saklamak için
 
         // KML dosyalarını yükle
         fetch('/kmz/api/get-kml-files/')
@@ -75,7 +79,7 @@
                     label.htmlFor = file;
                     label.appendChild(document.createTextNode(file));
 
-                    checkbox.addEventListener('change', function() {
+                    checkbox.addEventListener('change', function () {
                         handleCheckboxChange(file, this.checked);
                     });
 
@@ -84,7 +88,9 @@
                     kmlFilesContainer.appendChild(document.createElement('br'));
                 });
 
-                document.getElementById('toggle-all').addEventListener('change', function() {
+                document.getElementById('toggle-all').addEventListener('change', function () {
+                    clearAllLayers();  // Mevcut tüm katmanları sil
+
                     const isChecked = this.checked;
                     kmlFiles.forEach(file => {
                         const checkbox = document.getElementById(file);
@@ -93,6 +99,12 @@
                     });
                 });
             });
+
+        // Tüm katmanları temizlemek için buton event dinleyicisi
+        document.getElementById('clear-layers').addEventListener('click', function () {
+            clearAllLayers();
+            document.getElementById('toggle-all').checked = false; // "Toggle All" checkboxunu sıfırla
+        });
 
         function handleCheckboxChange(file, isChecked) {
             if (isChecked) {
@@ -107,7 +119,8 @@
                             var kmlLayer = omnivore.kml.parse(kmlText);
                             kmlLayer.addTo(map);
 
-                            kmlLayer.eachLayer(function(layer) {
+                            kmlLayer.eachLayer(function (layer) {
+                                
                                 var name = layer.feature.properties.name || "No name";
                                 var description = layer.feature.properties.description || "No description";
                                 layer.bindPopup("<b>" + name + "</b><br>" + description);
@@ -116,6 +129,8 @@
                             kmlLayers[file] = kmlLayer;
                         } catch (error) {
                             console.error(`Error adding KML Layer for ${file}:`, error); // Debug: Katman ekleme hatası
+                            alert(`KML dosyası yüklenirken hata : ${file}. Dosya yüklenmedi.`);
+
                         }
                     })
                     .catch(err => console.log('Failed to load KML: ', err));
@@ -128,6 +143,23 @@
                 }
             }
         }
+
+        // Tüm katmanları temizleme fonksiyonu
+        function clearAllLayers() {
+            Object.keys(kmlLayers).forEach(file => {
+                if (kmlLayers[file]) {
+                    map.removeLayer(kmlLayers[file]);
+                    delete kmlLayers[file];
+                }
+            });
+
+            // Tüm checkboxların işaretini kaldır
+            const checkboxes = document.querySelectorAll('input[name="kml_files"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
     </script>
 </body>
+
 </html>

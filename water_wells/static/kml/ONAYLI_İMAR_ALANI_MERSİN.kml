@@ -48,7 +48,8 @@
 			<name>NULL</name>
 			<visibility>0</visibility>
 			<Snippet maxLines="0"></Snippet>
-			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+			<description>
+			<![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
 
 <head>
 
