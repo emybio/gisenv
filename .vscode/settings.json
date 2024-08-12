@@ -1,4 +1,5 @@
 {
     "CodeGPT.apiKey": "CodeGPT Plus Beta",
-    "CodeGPT.Autocomplete.suggestionDelay": 100
+    "CodeGPT.Autocomplete.suggestionDelay": 100,
+    "python.analysis.typeCheckingMode": "basic"
 }

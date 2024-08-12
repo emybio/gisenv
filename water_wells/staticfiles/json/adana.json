@@ -1,0 +1,39 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [35.16272, 36.72804],
+            [35.16152, 36.72822],
+            [35.16108, 36.7262],
+            [35.16228, 36.72603],
+            [35.16272, 36.72804]
+          ]
+        ]
+      },
+      "properties": {
+        "ilceAd": "Karataş",
+        "mevkii": "İnnaplı Hududu",
+        "ilId": 23,
+        "durum": "1",
+        "ilceId": 109,
+        "zeminKmdurum": "Ana Taşınmaz",
+        "parselNo": "2",
+        "mahalleAd": "Karagöçer",
+        "ozet": "Karagöçer-101/2",
+        "gittigiParselListe": "",
+        "gittigiParselSebep": "",
+        "alan": "24.692,97",
+        "adaNo": "101",
+        "nitelik": "Tarla",
+        "ilAd": "Adana",
+        "mahalleId": 44955,
+        "pafta": "034D04a"
+      }
+    }
+  ]
+}

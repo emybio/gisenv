@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "georaster",
     "users",
     "kmz",
+    "turkiye",
 ]
 
 MIDDLEWARE = [

@@ -49,8 +49,8 @@ def firma_delete(request, pk):
         return redirect('firma_list')
     return render(request, 'firma/firma_confirm_delete.html', {'firma': firma})
 @login_required
-def firma_sahis_list(request, pk):
+def firma_basvuru_list(request, pk):
     firma = get_object_or_404(Firma, pk=pk)
-    sahislar = Sahis.objects.filter(firma=firma)
-    return render(request, 'firma/firma_sahis_list.html', {'firma': firma, 'sahislar': sahislar})
+    basvurular = Sahis.objects.filter(firma=firma)
+    return render(request, 'firma/firma_basvuru_list.html', {'firma': firma, 'basvurular': basvurular})
 
