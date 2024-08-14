@@ -2,9 +2,10 @@ from django import forms
 from .models import Sahis
 
 class SahisForm(forms.ModelForm):
+    
     class Meta:
         model = Sahis
-        fields = [
+        fields = ['id',
             'tc_kimlik_no', 'adres', 'isim', 'telefon', 'mahalle',
             'ada', 'parsel', 'koordinat1', 'koordinat2', 'firma'
         ]

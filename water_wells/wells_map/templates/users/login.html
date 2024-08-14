@@ -1,77 +1,76 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block body %}
-
+{% if not user.is_authenticated %}
 <style>
-html,
-body {
-  height: 100%;
-}
+  html,
+  body {
+    height: 100%;
+  }
 
-body {
-  display: flex;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #40e0d0;
-}
+  body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
 
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
+    background-image: url('/static/img/zumer21.PNG'), rgba(rgb(146, 83, 83), rgb(65, 112, 65), rgb(120, 120, 155), .1);
+    background-repeat: no-repeat;
+  }
 
-.form-signin .checkbox {
-  font-weight: 400;
-}
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
 
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
 
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
 
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 
-
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 </style>
 <main class="form-signin text-center">
 
-    <form method="post">
-        {% csrf_token %}
+  <form method="post">
+    {% csrf_token %}
 
-        <img class="mb-4" src="{% static '/img/dsi_logo_orjinal_opacity70.png' %}" alt="" width="250" height="125">
-        <h1 class="h3 mb-3 fw-normal ">Lütfen Giriş Yapın</h1>
+    <img class="mb-4" src="{% static '/img/dsi_logo_orjinal_opacity70.png' %}" alt="" width="250" height="125">
+    <h1 class="h3 mb-3 fw-normal ">Lütfen Giriş Yapın</h1>
 
-        <div class="form-floating">
-            {{ form.username.errors }}
-            <input type="text" name="username" placeholder="name@example.com" autofocus="" autocapitalize="none"
-                required="" autocomplete="username" maxlength="150" aria-invalid="true" class="form-control"
-                id="floatingInput">
+    <div class="form-floating">
+      {{ form.username.errors }}
+      <input type="text" name="username" placeholder="name@example.com" autofocus="" autocapitalize="none" required=""
+        autocomplete="username" maxlength="150" aria-invalid="true" class="form-control" id="floatingInput">
 
 
-            <label for="floatingInput">Kullanıcı Adı</label>
-        </div>
-        <div class="form-floating">
+      <label for="floatingInput">Kullanıcı Adı</label>
+    </div>
+    <div class="form-floating">
 
-            {{form.password.errors}}
-            <input type="password" name="password" autocomplete="current-password" required="" aria-invalid="true"
-                class="form-control" id="floatingPassword" placeholder="Password">
+      {{form.password.errors}}
+      <input type="password" name="password" autocomplete="current-password" required="" aria-invalid="true"
+        class="form-control" id="floatingPassword" placeholder="Password">
 
-            <label for="floatingPassword">Şifre</label>
-        </div>
+      <label for="floatingPassword">Şifre</label>
+    </div>
 
-        <!-- <div class="checkbox mb-3">
+    <!-- <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
@@ -79,17 +78,17 @@ body {
 
 
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Giriş</button><a href="/register"
-            class="w-100 btn btn-lg btn-info"> Kayıt Yap</a>
-        <p class="mt-5 mb-3 text-muted">&copy; DSİ-2024</p>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Giriş</button><a href="/register"
+      class="w-100 btn btn-lg btn-info"> Kayıt Yap</a>
+    <p class="mt-5 mb-3 text-muted">&copy; DSİ-2024</p>
 
 
 
-    </form>
+  </form>
 
 </main>
 
-
+{% endif %}
 
 <!-- 
 

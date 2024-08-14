@@ -18,7 +18,8 @@ def basvuru_list(request):
 @login_required
 def basvuru_detail(request, pk):
     basvuru = get_object_or_404(Sahis, pk=pk)
-    return render(request, 'basvuru/basvuru_detail.html', {'basvuru': basvuru})
+    title="Başvuru Detay"
+    return render(request, 'basvuru/basvuru_detail.html', {'basvuru': basvuru,'title':title})
 
 @login_required
 def basvuru_create(request):
@@ -37,19 +38,24 @@ def basvuru_create(request):
             return redirect('basvuru_list')
     else:
         form = SahisForm()
-    return render(request, 'basvuru/basvuru_form.html', {'form': form,'iller':iller})
+        title="Yeni Başvuru"
+    return render(request, 'basvuru/basvuru_form.html', {'form': form,'iller':iller,'title':title})
 
 @login_required
 def basvuru_update(request, pk):
+    iller = Il.objects.all()
     basvuru = get_object_or_404(Sahis, pk=pk)
+    print("basvuru: ",basvuru.id) 
     if request.method == 'POST':
         form = SahisForm(request.POST, instance=basvuru)
+       
         if form.is_valid():
             form.save()
             return redirect('basvuru_list')
     else:
         form = SahisForm(instance=basvuru)
-    return render(request, 'basvuru/basvuru_form.html', {'form': form})
+        title="Başvuru Güncelle"
+    return render(request, 'basvuru/basvuru_form.html', {'form': form,'iller':iller,'title':title})
 
 @login_required
 def basvuru_delete(request, pk):

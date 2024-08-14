@@ -253,46 +253,7 @@
 					</coordinates>
 				</LineString>
 			</Placemark>
-			<Placemark>
-				<name>TH10/2</name>
-				<visibility>0</visibility>
-				<styleUrl>#default003</styleUrl>
-				<Style>
-					<LineStyle>
-						<color>ff0000ff</color>
-					</LineStyle>
-					<PolyStyle>
-						<color>ff0000ff</color>
-					</PolyStyle>
-				</Style>
-				<LineString>
-					<extrude>1</extrude>
-					<tessellate>1</tessellate>
-					<altitudeMode>relativeToGround</altitudeMode>
-					<coordinates>
-					</coordinates>
-				</LineString>
-			</Placemark>
-			<Placemark>
-				<name>TH10/3</name>
-				<visibility>0</visibility>
-				<styleUrl>#default003</styleUrl>
-				<Style>
-					<LineStyle>
-						<color>ff0000ff</color>
-					</LineStyle>
-					<PolyStyle>
-						<color>ff0000ff</color>
-					</PolyStyle>
-				</Style>
-				<LineString>
-					<extrude>1</extrude>
-					<tessellate>1</tessellate>
-					<altitudeMode>relativeToGround</altitudeMode>
-					<coordinates>
-					</coordinates>
-				</LineString>
-			</Placemark>
+			
 		</Folder>
 	</Folder>
 </Document>

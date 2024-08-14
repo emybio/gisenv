@@ -4,7 +4,7 @@
 	<name>DOĞA VARLIKLARI KORUMA ALANLARI</name>
 	<visibility>0</visibility>
 	<open>1</open>
-	<Document id="Alata" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Alata" >
 		<name>Alata</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -314,7 +314,7 @@
 	<Folder>
 		<name>Osmaniye Kastabala Sulak Alanı</name>
 		<visibility>0</visibility>
-		<Document id=" " xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+		<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id=" " xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 			<name>Tescil Sınırı.kmz</name>
 			<visibility>0</visibility>
 			<Snippet maxLines="0"></Snippet>
@@ -517,7 +517,7 @@
 				</Placemark>
 			</Folder>
 		</Document>
-		<Document id=" " xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+		<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id=" " xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 			<name>Sürdürülebilir Kullanım Bölgesi.kmz</name>
 			<visibility>0</visibility>
 			<Snippet maxLines="0"></Snippet>
@@ -1199,7 +1199,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="Anamur_kosekbuku_magarası" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Anamur_kosekbuku_magarası" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>Anamur_kosekbuku_magarası</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -1331,7 +1331,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="antakya" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="antakya" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>antakya Habibi Neccar ve Saint Pier Kilisesi</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -1549,7 +1549,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="tarsus" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="tarsus" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>Tarsus Dalyanı</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -2403,7 +2403,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="GULNAR_YERKOPRU_SELALESİ" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="GULNAR_YERKOPRU_SELALESİ" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>GULNAR_YERKOPRU_SELALESİ</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -2607,7 +2607,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="ASTIM_MAGARASI_CENNET_CEHENNEM" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ASTIM_MAGARASI_CENNET_CEHENNEM" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>ASTIM_MAGARASI_CENNET_CEHENNEM</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -2911,7 +2911,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="ALATA_SAHİL" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ALATA_SAHİL" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>ALATA_SAHİL</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -3115,7 +3115,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="Kazanlı" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Kazanlı" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>AKDENİZ KAZANLI SULAK ALAN</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -3638,7 +3638,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="Akyatan_6derece" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Akyatan_6derece" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>Akyatan_6derece</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -4157,7 +4157,7 @@
 			</LineString>
 		</Placemark>
 	</Document>
-	<Document id="Tarsus_dalyanı" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Tarsus_dalyanı" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>TARSUS DALYANI SULAK ALAN</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -4365,7 +4365,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="adanalıoglu" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="adanalıoglu" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>ADANALIOĞLU SULAK ALAN</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -4717,7 +4717,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="Goksu" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Goksu" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>GÖKSU SULAK ALAN</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>
@@ -5110,7 +5110,7 @@
 			</Placemark>
 		</Folder>
 	</Document>
-	<Document id="yerkopru" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="yerkopru" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
 		<name>yerkopru</name>
 		<visibility>0</visibility>
 		<Snippet maxLines="0"></Snippet>

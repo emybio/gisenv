@@ -17,8 +17,8 @@
                         <th>İsim</th>
                         <th>TC Kimlik No</th>
                         <th>Telefon</th>
-                        <th>İl</th>
-                        <th>İlçe</th>
+                        <th>İl/İlçe/Mahalle</th>
+                        
                         <th>Koordinatlar</th>
                         <th>Kaydeden</th>
                         <th>İşlemler</th>
@@ -32,8 +32,7 @@
                         <td><a href="{% url 'basvuru_detail' basvuru.pk %}">{{ basvuru.isim }}</a></td>
                         <td>{{ basvuru.tc_kimlik_no }}</td>
                         <td>{{ basvuru.telefon }}</td>
-                        <td>{{ basvuru.il }}</td>
-                        <td>{{ basvuru.ilce }}</td>
+                        <td>{{ basvuru.mahalle.ilce.il }}/{{ basvuru.mahalle.ilce }}/{{ basvuru.mahalle }}</td>
                         <td><a href="{{  map_url  }}" class="btn btn-secondary btn-sm">
                                 {{ basvuru.koordinat1 }}- {{basvuru.koordinat2}}</a></td>
                         <td>{{ basvuru.user.username }}</td>

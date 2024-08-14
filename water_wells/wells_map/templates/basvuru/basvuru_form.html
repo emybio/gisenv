@@ -1,101 +1,159 @@
 {% extends "base.html" %}
 
-{% block title %}Sahis Formu{% endblock %}
+{% block title %}
+{{title}}
+{% endblock %}
 
 {% block body %}
 
-<div class="container">
-    <div class="card col-6">
-        <div class="card-header">
-            <h2>Başvuru Formu</h2>
-        </div>
-        <div class="card-body ">
-            <form method="post" class="needs-validation" novalidate>
-                {% csrf_token %}
-                {% for field in form %}
-                <div class="form-group mb-2 mr-2">
-                    <label for="{{ field.id_for_label }}" class="mr-2">{{ field.label }}</label>
-                   
+<div class="row">
+    <div class="card-group">
+        <div class="card border-primary mb-3" style="max-width: 18em;">
+            <div class="card-header">Mahalle Bilgisi {{form.firma}} </div>
+            <div class="card-body text-primary">
+                <h5 class="card-title">Primary card title</h5>
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
                     {% if field.name == "mahalle" %}
-                    <select id="id_il" name="il"  class="form-control form-control-sm">
-                        <option value="">Seçin</option>
+                    <label for="id_il" class="mr-2">İl</label>
+                    <select id="id_il" name="il" class="form-control form-control-sm">
+                        <option value="">İl Seçiniz</option>
                         {% for il in iller %}
                         <option value="{{ il.id }}">{{ il.ad }}</option>
                         {% endfor %}
                     </select>
-                
+
                     <label for="id_ilce">İlçe:</label>
-                    <select id="id_ilce" name="ilce"  class="form-control form-control-sm">
-                        <option value="">Seçin</option>
+                    <select id="id_ilce" name="ilce" class="form-control form-control-sm">
+                        <option value="">İlçe Seçiniz</option>
                     </select>
-                
+
                     <label for="id_semt">Semt:</label>
-                    <select id="id_semt" name="semt" class="form-control form-control-sm" >
-                        <option value="">Seçin</option>
+                    <select id="id_semt" name="semt" class="form-control form-control-sm">
+                        <option value="">Semt Seçiniz</option>
                     </select>
-                    
-                   
-                       
-                   
-                    {% endif %}
-
-
-                    {% if field.name == "firma" %}
+                    <label for="{{ field.id_for_label }}" class="mr-2">{{ field.label }}</label>
                     <select name="{{ field.name }}" id="{{ field.id_for_label }}"
                         class="form-control form-control-sm{% if field.errors %} is-invalid{% endif %}">
-                        <option value="">Firma Seçiniz </option>
+                        <option value="">Mahalle Seçiniz </option>
                         {% for choice in field.field.queryset %}
 
-                        <option value="{{ choice.pk }}" {% if choice.pk == field.value %}selected{% endif %}>{{ choice }}
-
-                        </option>
-
-                        {% endfor %}
+                        <option value="{{ choice.pk }}" {% if choice.pk == field.value %}selected{% endif %}>
+                            {{choice}}
+    
+                        </option>{% endfor %}
                     </select>
-                    {% else %}
-                    <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
-                        id="{{ field.id_for_label }}"
-                        class="form-control form-control-sm{% if field.errors %} is-invalid{% endif %}"
-                        value="{{ field.value|default:'' }}">
                     {% endif %}
-
-
-                    {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                    <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
-                </div>
+            </div>
 
+        </div>
+
+        <div class="card border-secondary mb-3">
+            <div class="card-header">Header</div>
+            <div class="card-body text-secondary">
+                <h5 class="card-title">Secondary card title</h5>
+
+                {% for field in form %}
+                
+
+                <label for="{{ field.id_for_label }}" class="mr-2">{{ field.label }}</label>
+
+                {% if field.name == "firma" %}
+
+                <select name="{{ field.name }}" id="{{ field.id_for_label }}"
+                    class="form-control form-control-sm{% if field.errors %} is-invalid{% endif %}">
+                    <option value="">{{ field.firma.value }} </option>
+                    {% for choice in field.field.queryset %}
+
+                    <option value="{{ choice.pk }}" {% if choice.pk == field.value %}selected{% endif %}>
+                        {{choice}}
+
+                    </option>{% endfor %}
+                </select>
+                {% else %}
+
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                    class="form-control form-control-sm{% if field.errors %} is-invalid{% endif %}"
+                    value="{{ field.value|default:'' }}">
+                {% endif %}
+
+
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+
+             
                 {% endfor %}
 
                 <button type="submit" class="btn btn-primary btn-sm">Kaydet</button>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-    <a href="{% url 'basvuru_list' %}" class="btn btn-secondary btn-sm mt-3">Geri Dön</a>
 </div>
+
+
+
 <script>
     $(document).ready(function () {
+        var $ilceSelect = $('#id_ilce');
+        var $semtSelect = $('#id_semt');
+        var $mahalleSelect = $('#id_mahalle');
 
         $('#id_il').change(function () {
-            
             var il_id = $(this).val();
+
             $.ajax({
                 url: '{% url "get_ilceler" %}',
                 data: {
                     'il_id': il_id
                 },
                 success: function (data) {
-                    var $ilceSelect = $('#id_ilce');
+
                     $ilceSelect.empty();
+                    $semtSelect.empty();
+                    $mahalleSelect.empty();
+                    $ilceSelect.append($('<option>', {
+                        value: 0,
+                        text: "İlçe Seçiniz"
+                    }));
+                    $semtSelect.append($('<option>', {
+                        value: 0,
+                        text: "Semt Seçiniz"
+                    }));
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Mahelle Seçiniz"
+                    }));
                     $.each(data, function (index, item) {
                         $ilceSelect.append($('<option>', {
                             value: item.id,
                             text: item.ad
                         }));
                     });
+                }, error: function (xhr, ajaxOptions, thrownError) {
+                    $ilceSelect.empty();
+                    $semtSelect.empty();
+                    $mahalleSelect.empty();
+
+                    $ilceSelect.append($('<option>', {
+                        value: 0,
+                        text: "İlçe Seçiniz"
+                    }));
+                    $semtSelect.append($('<option>', {
+                        value: 0,
+                        text: "Semt Seçiniz"
+                    }));
+
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Mahalle Seçiniz"
+                    }));
                 }
             });
         });
@@ -108,8 +166,17 @@
                     'ilce_id': ilce_id
                 },
                 success: function (data) {
-                    var $semtSelect = $('#id_semt');
+
                     $semtSelect.empty();
+                    $mahalleSelect.empty();
+                    $semtSelect.append($('<option>', {
+                        value: 0,
+                        text: "Semt Seçiniz"
+                    }));
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Mahalle Seçiniz"
+                    }));
                     $.each(data, function (index, item) {
                         $semtSelect.append($('<option>', {
                             value: item.id,
@@ -128,9 +195,15 @@
                     'semt_id': semt_id
                 },
                 success: function (data) {
-                    var $mahalleSelect = $('#id_mahalle');
+
                     $mahalleSelect.empty();
+                    $mahalleSelect.append($('<option>', {
+                        value: 0,
+                        text: "Mahalle Seçiniz"
+                    }));
                     $.each(data, function (index, item) {
+
+
                         $mahalleSelect.append($('<option>', {
                             value: item.id,
                             text: item.ad
